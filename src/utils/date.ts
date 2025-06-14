@@ -1,3 +1,5 @@
+import { CalendarCell, CalendarEvent, MONTHS } from "../contants/date";
+
 export const generateYears = (
     start: number = 1900,
     end: number = new Date().getFullYear() + 50
@@ -9,32 +11,42 @@ export const generateYears = (
     return years;
 };
 
-export type CalendarCell = {
-  date: Date | null;
-  day?: number;
-  isCurrentMonth: boolean;
-};
+export const getCalendarGrid = (
+    year: number,
+    month: number,
+    daysEvents?: CalendarEvent[]
+): CalendarCell[] => {
+    const result: CalendarCell[] = [];
 
-export const getCalendarGrid = (year: number, month: number): CalendarCell[] => {
-  const result: CalendarCell[] = [];
+    const firstOfMonth = new Date(year, month, 1);
+    const startDay = firstOfMonth.getDay();
 
-  const firstDayOfMonth = new Date(year, month, 1);
-  const weekdayOfFirst = firstDayOfMonth.getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const totalDays = startDay + daysInMonth;
 
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const cellCount = totalDays <= 35 ? 35 : 42;
 
-  for (let i = 0; i < weekdayOfFirst; i++) {
-    result.push({ date: null, isCurrentMonth: false });
-  }
+    const gridStart = new Date(year, month, 1 - startDay);
 
-  for (let day = 1; day <= daysInMonth; day++) {
-    const date = new Date(year, month, day);
-    result.push({ date, day, isCurrentMonth: true });
-  }
+    for (let i = 0; i < cellCount; i++) {
+        const date = new Date(gridStart);
+        date.setDate(gridStart.getDate() + i);
+        const dayEvents = daysEvents?.filter(
+            (event) =>
+                event.start.getFullYear() === date.getFullYear() &&
+                event.start.getMonth() === date.getMonth() &&
+                event.start.getDate() === date.getDate()
+        );
+        
 
-  while (result.length < 42) {
-    result.push({ date: null, isCurrentMonth: false });
-  }
+        result.push({
+            date,
+            day: date.getDate(),
+            month: MONTHS[date.getMonth()].label,
+            isCurrentMonth: date.getMonth() === month,
+            events: dayEvents ?  dayEvents : [],
+        });
+    }
 
-  return result;
+    return result;
 };

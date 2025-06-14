@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Box } from "@mui/material";
 
-import { MonthIndex } from "../../contants/months";
+import { MonthIndex } from "../../contants/date";
 import { LeftHeader } from "./LeftHeader";
 import { RightHeader } from "./RightHeader";
 
@@ -19,11 +19,6 @@ export const FastHeader = ({
     setSelectedYear,
 }: FastHeaderProps) => {
 
-
-    useEffect(() => {
-        console.log(selectedYear);
-        
-    }, [selectedYear]);
     return (
         <Box
             sx={{

@@ -1,44 +1,62 @@
-import { Box } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 
 import { getCalendarGrid } from "../../utils/date";
+import { CalendarEvent, WEEK_DAYS } from "../../contants/date";
+import { FastCell } from "./FastCell";
 
 interface FastGridProps {
     year: number;
     month: number;
+    daysEvents?: CalendarEvent[];
 }
 
-export const FastGrid = ({ year, month }: FastGridProps) => {
-    const days = getCalendarGrid(year, month);
+export const FastGrid = ({ year, month, daysEvents }: FastGridProps) => {
+    const days = getCalendarGrid(year, month, daysEvents);
+
 
     return (
         <Box
             sx={{
-                display: "grid",
-                gridTemplateColumns: "repeat(7, 1fr)",
-                gap: "10px",
                 width: "100%",
             }}
         >
-            {days.map((cell, index) => (
-                <Box
-                    key={index}
-                    sx={{
-                        width: "100%",
-                        aspectRatio: "1",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        borderRadius: 1,
-                        bgcolor: cell.isCurrentMonth
-                            ? "primary.main"
-                            : "grey.300",
-                        color: cell.isCurrentMonth ? "white" : "grey.600",
-                        fontWeight: 500,
-                    }}
-                >
-                    {cell.day ?? ""}
-                </Box>
-            ))}
+            <Box
+                sx={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(7, 1fr)",
+                    gap: "5px",
+                    mb: 1,
+                }}
+            >
+                {WEEK_DAYS.map((day) => (
+                    <Typography
+                        key={day}
+                        align="center"
+                        variant="body2"
+                        fontWeight={600}
+                        color="text.secondary"
+                    >
+                        {day}
+                    </Typography>
+                ))}
+            </Box>
+            <Divider sx={{ mb: 1 }} />
+            <Box
+                sx={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(7, 1fr)",
+                    gap: "5px",
+                    width: "100%",
+                }}
+            >
+                {days.map((cell, index) => (
+                    <FastCell
+                        key={index}
+                        cell={cell}
+                        index={index}
+                    />
+                ))}
+            </Box>
         </Box>
     );
 };

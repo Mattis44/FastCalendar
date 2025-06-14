@@ -7,7 +7,7 @@ import {
     Select,
 } from "@mui/material";
 
-import { MonthIndex, MONTHS } from "../../contants/months";
+import { MonthIndex, MONTHS } from "../../contants/date";
 
 interface LeftHeaderProps {
     selectedMonth: MonthIndex;

@@ -19,3 +19,25 @@ export const MONTHS: Month[] = [
     { label: "November", index: 10 },
     { label: "December", index: 11 },
 ];
+
+export const WEEK_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+
+export type CalendarEvent = {
+    id: string;
+    title: string;
+    icon: string;
+    start: Date;
+    end?: Date;
+    allDay?: boolean;
+    description?: string;
+    color: string;
+}
+
+export type CalendarCell = {
+    date: Date | null;
+    day?: number;
+    month?: string;
+    isCurrentMonth: boolean;
+    events?: CalendarEvent[];
+};
