@@ -1,11 +1,12 @@
 <h1 align="center">
   <img src="./assets/FastCalendarIcon.png" alt="Fast Calendar" width="300" height="300" />
-  <center>
+  <br/>
   Fast Calendar
-  </center>
 </h1>
 
-<h4 align="center">A fast-to-use React Calendar library built for <a href="https://mui.com/" target="_blank">MUI</a>.</h4>
+<h4 align="center">
+  A fast-to-use React Calendar library built for <a href="https://mui.com/" target="_blank">MUI</a>.
+</h4>
 
 <p align="center">
   <a href="#key-features">Key Features</a> •
@@ -45,7 +46,7 @@ To use Fast Calendar in your MUI project, follow these steps:
     ```
 
 3. **Use the component in your JSX**:
-    ```sh
+    ```javascript
     <FastCalendar
         onChange={(date) => console.log(date)}
     />
