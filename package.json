@@ -1,0 +1,44 @@
+{
+    "name": "fastcalendar",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "tsup src/index.tsx --format esm,cjs --dts",
+        "dev": "tsup src/index.tsx --format esm,cjs --dts --watch"
+    },
+    "module": "dist/index.mjs",
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs",
+    "devDependencies": {
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.0",
+        "@mui/material": "^7.1.1",
+        "@types/react": "^19.1.8",
+        "@types/react-dom": "^19.1.6",
+        "tsup": "^8.5.0",
+        "typescript": "^5.8.3"
+    },
+    "dependencies": {
+        "@mui/icons-material": "^7.1.1",
+        "react": "^18.0.0",
+        "react-dom": "^18.0.0"
+    },
+    "exports": {
+        ".": {
+            "require": "./dist/index.js",
+            "import": "./dist/index.mjs",
+            "types": "./dist/types/index.d.ts"
+        }
+    },
+    "types": "dist/types/index.d.ts",
+    "peerDependencies": {
+        "@emotion/react": "^11.11.0",
+        "@emotion/styled": "^11.11.0",
+        "@mui/material": "^5.15.0",
+        "react": "^18.0.0",
+        "react-dom": "^18.0.0"
+    }
+}
