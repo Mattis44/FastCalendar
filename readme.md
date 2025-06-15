@@ -48,7 +48,7 @@ To use Fast Calendar in your MUI project, follow these steps:
 3. **Use the component in your JSX**:
     ```javascript
     <FastCalendar
-        onChange={(date) => console.log(date)}
+        events={yourEvents} // Check the Events section for more details
     />
     ```
 
@@ -89,4 +89,77 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <App />
     </ThemeProvider>
 );
+```
+
+## Events
+
+Fast Calendar supports a variety of events that can be passed to the component. Events are objects with the following structure:
+
+```typescript
+type CalendarEvent {
+    id: string; // Unique identifier for the event
+    title: string; // Title of the event
+    start: Date; // Start date and time of the event
+    end: Date; // End date and time of the event
+    allDay?: boolean; // Optional, true if the event lasts all day
+    color?: string; // Optional, custom color for the event
+}
+```
+
+`CalendarEvent` is the type for each event object. You can import it from the library:
+
+```typescript
+import { type CalendarEvent } from "fastcalendar";
+```
+
+### Start using events
+
+To start using events, you have to use `useEvents` hook, which provides a way to manage events in your calendar easily.
+This hook returns objects with the following properties:
+
+```typescript
+type useEvents {
+    events: CalendarEvent[]; // Array of current events
+    loading: boolean; // Indicates if events are currently being loaded
+    error: Error | null; // Error object if there was an issue loading events
+    refresh: () => void; // Function to refresh the events
+}
+```
+
+`useEvents` takes a function as an argument that returns a promise resolving to an array of `CalendarEvent` objects. This function is called whenever the calendar needs to load events.
+
+```javascript
+import { useEvents, type CalendarEvent } from "fastcalendar";
+
+const fetchEvents = async (): Promise<CalendarEvent[]> => {
+    const response = await fetch("https://example.com/api");
+    if (!response.ok) {
+        throw new Error("Failed to fetch events");
+    }
+    const data = await response.json();
+    return data as CalendarEvent[];
+};
+
+const { events, loading, error, refresh } = useEvents({fetchEvents});
+
+return (
+    <FastCalendar
+        events={events}
+    />
+)
+```
+
+### Data state management
+Fast Calendar provides `loading`, `error`, and `refresh` properties to manage the state of your events data. You can use these properties to show loading indicators, handle errors, or refresh the event list.
+
+If you want to let Fast Calandar handle states for you, you can pass them from `dataState` prop:
+
+```javascript
+<FastCalendar
+    events={events}
+    dataState={{
+        loading: loading,
+        error: error,
+    }}
+/>
 ```
