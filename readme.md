@@ -192,6 +192,9 @@ npm install
 
 # Run the development server
 npm run dev
+
+# Install fastcalendar as a local dependency from a project with MUI
+npm install --save ../fastcalendar
 ```
 
 ### Code Structure Overview
