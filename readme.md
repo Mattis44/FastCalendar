@@ -11,10 +11,10 @@
 <p align="center">
   <a href="#key-features">Key Features</a> •
   <a href="#how-to-use">How To Use</a> •
-  <a href="#download">Download</a> •
-  <a href="#credits">Credits</a> •
-  <a href="#related">Related</a> •
-  <a href="#license">License</a>
+  <a href="#theming">Theming</a> •
+  <a href="#events">Events</a> •
+  <a href="#customization">Customization</a> •
+  <a href="#development">Development</a> •
 </p>
 
 -- Gif Demo example --
@@ -164,7 +164,9 @@ If you want to let Fast Calandar handle states for you, you can pass them from `
 />
 ```
 
-You can customize the loading and error default components by using `components` prop:
+## Customization
+
+You can customize components by using `components` prop:
 
 ```javascript
 <FastCalendar
@@ -175,3 +177,37 @@ You can customize the loading and error default components by using `components`
     }}
 />
 ```
+
+## Development
+
+To run the project locally during development:
+
+```bash
+# Clone the repository
+git clone https://github.com/Mattis44/FastCalendar.git
+cd fastcalendar
+
+# Install dependencies
+npm install
+
+# Run the development server
+npm run dev
+```
+
+### Code Structure Overview
+
+- `components/`: React components (calendar UI, header, etc.)
+- `hooks/`: Custom hooks like `useEvents`
+- `types/`: TypeScript types
+- `utils/`: Reusable functions (e.g., date helpers, rendering utilities)
+
+## Contributing
+
+Contributions are welcome! To contribute:
+
+1. Fork the repository
+2. Create a new branch: `git checkout -b feature/your-feature-name`
+3. Make your changes
+4. Submit a pull request
+
+Please include tests or documentation updates where relevant.

@@ -6,6 +6,7 @@ import { FastGrid } from "./Calendar/FastGrid";
 import { CalendarEvent, MonthIndex } from "../types/date";
 import { Components, DataState } from "../types/calendar";
 import { ErrorFallback } from "./Fallbacks/ErrorFallback";
+import { renderOptionalComponent } from "../utils/render";
 
 interface FastCalendarProps {
     events?: CalendarEvent[];
@@ -33,11 +34,11 @@ export const FastCalendar = ({ events, dataState, components }: FastCalendarProp
 
     return (
         <FastContainer>
-            {dataState?.error && (
-                components?.error ? (
-                    <components.error error={dataState.error} />
-                ) : (
-                    <ErrorFallback error={dataState.error} />
+            {dataState?.error instanceof Error && (
+                renderOptionalComponent(
+                    components?.error,
+                    ErrorFallback,
+                    { error: dataState.error }
                 )
             )}
             <FastHeader

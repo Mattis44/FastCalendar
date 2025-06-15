@@ -5,6 +5,7 @@ import { CalendarEvent } from "../../types/date";
 import { WEEK_DAYS } from "../../contants/date";
 import { FastCell } from "./FastCell";
 import { LoadingFallback } from "../Fallbacks/LoadingFallback";
+import { renderOptionalComponent } from "../../utils/render";
 
 interface FastGridProps {
     year: number;
@@ -87,11 +88,12 @@ export const FastGrid = ({
                             zIndex: 10,
                         }}
                     >
-                        {components?.loading ? (
-                            <components.loading />
-                        ) : (
-                            <LoadingFallback />
-                        )}
+                        {loading &&
+                            renderOptionalComponent(
+                                components?.loading,
+                                LoadingFallback,
+                                {}
+                            )}
                     </Box>
                 </Box>
             )}
