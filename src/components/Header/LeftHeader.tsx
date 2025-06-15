@@ -7,16 +7,18 @@ import {
     Select,
 } from "@mui/material";
 
-import { MonthIndex, MONTHS } from "../../contants/date";
-
+import { MonthIndex } from "../../types/date";
+import { MONTHS } from "../../contants/date";
 interface LeftHeaderProps {
     selectedMonth: MonthIndex;
     setSelectedMonth: (month: MonthIndex) => void;
+    setSelectedYear: (year: number) => void;
 }
 
 export const LeftHeader = ({
     selectedMonth,
     setSelectedMonth,
+    setSelectedYear,
 }: LeftHeaderProps) => {
     return (
         <Box
@@ -46,9 +48,10 @@ export const LeftHeader = ({
             <Button
                 variant="outlined"
                 size="small"
-                onClick={() =>
-                    setSelectedMonth(new Date().getMonth() as MonthIndex)
-                }
+                onClick={() => {
+                    setSelectedMonth(new Date().getMonth() as MonthIndex);
+                    setSelectedYear(new Date().getFullYear());
+                }}
             >
                 Today
             </Button>

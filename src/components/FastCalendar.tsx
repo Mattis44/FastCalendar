@@ -3,48 +3,38 @@ import { useEffect, useState } from "react";
 import { FastContainer } from "./FastContainer";
 import { FastHeader } from "./Header/FastHeader";
 import { FastGrid } from "./Calendar/FastGrid";
-import { CalendarEvent, MonthIndex } from "../contants/date";
+import { CalendarEvent, MonthIndex } from "../types/date";
+import { DataState } from "../types/calendar";
+import { LoadingFallback } from "./Fallbacks/LoadingFallback";
+import { ErrorFallback } from "./Fallbacks/ErrorFallback";
 
 interface FastCalendarProps {
-    daysEvents?: CalendarEvent[];
+    events?: CalendarEvent[];
+    dataState?: DataState;
 }
 
-const fakeEvents: CalendarEvent[] = [
-    {
-        id: "1",
-        title: "Meeting with team",
-        icon: "🏤",
-        start: new Date(2025, 6, 5, 10, 0),
-        end: new Date(2025, 6, 5, 11, 0),
-        allDay: false,
-        color: "#ff5722",
-        description: "Discuss project updates and next steps.",
-    },
-    {
-        id: "2",
-        title: "Project deadline",
-        icon: "🚀",
-        start: new Date(2025, 5, 10),
-        allDay: true,
-        color: "#4caf50",
-    },
-];
-
-export const FastCalendar = ({ daysEvents }: FastCalendarProps) => {
+/**
+ * @param {CalendarEvent[]} events - Array of calendar events for the month
+ */
+export const FastCalendar = ({ events, dataState }: FastCalendarProps) => {
     const [selectedMonth, setSelectedMonth] = useState<MonthIndex>(
         new Date().getMonth() as MonthIndex
     );
     const [selectedYear, setSelectedYear] = useState<number>(
         new Date().getFullYear()
     );
-    const [events, setEvents] = useState<CalendarEvent[]>([]);
+    const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([]);
 
     useEffect(() => {
-        setTimeout(() => {
-            setEvents(fakeEvents);
-        }, 1000);
-    }, []);
-
+        if (events) {
+            setCalendarEvents(events);
+        }
+    }, [events]);
+    console.log("[FastCalendar] Rendered with events:", calendarEvents);
+    
+    if (dataState?.error) {
+        return <ErrorFallback error={dataState.error} />;
+    }
     return (
         <FastContainer>
             <FastHeader
@@ -56,7 +46,8 @@ export const FastCalendar = ({ daysEvents }: FastCalendarProps) => {
             <FastGrid
                 year={selectedYear}
                 month={selectedMonth}
-                daysEvents={daysEvents || events}
+                events={calendarEvents}
+                loading={dataState?.loading}
             />
         </FastContainer>
     );

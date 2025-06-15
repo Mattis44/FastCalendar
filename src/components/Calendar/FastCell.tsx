@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { CalendarCell, CalendarEvent } from "../../contants/date";
+import { CalendarCell } from "../../types/date";
 import { CellEvent } from "./CellEvent";
 
 interface FastCellProps {
@@ -47,6 +47,7 @@ export const FastCell = ({ cell, index }: FastCellProps) => {
                         : "transparent",
                     borderRadius: "50%",
                     padding: "3px 6px",
+                    pointerEvents: "none",
                 }}
             >
                 {cell.day}

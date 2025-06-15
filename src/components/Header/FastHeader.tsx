@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Box } from "@mui/material";
 
-import { MonthIndex } from "../../contants/date";
+import { MonthIndex } from "../../types/date";
 import { LeftHeader } from "./LeftHeader";
 import { RightHeader } from "./RightHeader";
 
@@ -31,6 +31,7 @@ export const FastHeader = ({
             <LeftHeader
                 selectedMonth={selectedMonth}
                 setSelectedMonth={setSelectedMonth}
+                setSelectedYear={setSelectedYear}
             />
             <RightHeader
                 selectedYear={selectedYear}

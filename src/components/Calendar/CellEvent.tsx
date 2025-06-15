@@ -1,5 +1,5 @@
-import { alpha, Box, Typography } from "@mui/material";
-import { CalendarEvent } from "../../contants/date";
+import { alpha, Box, Tooltip, Typography } from "@mui/material";
+import { CalendarEvent } from "../../types/date";
 
 interface CellEventProps {
     event: CalendarEvent;
@@ -18,19 +18,28 @@ export const CellEvent = ({ event, showTitle = true }: CellEventProps) => {
                 borderRadius: "10px",
             }}
         >
-            <Typography>{event.icon}</Typography>
+            <Typography
+                sx={{
+                    pointerEvents: "none",
+                }}
+            >
+                {event.icon}
+            </Typography>
             {showTitle && (
-                <Typography
-                    sx={{
-                        textOverflow: "ellipsis",
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        color: event.color,
-                        fontWeight: 500,
-                    }}
-                >
-                    {event.title}
-                </Typography>
+                <Tooltip title={event.title}>
+                    <Typography
+                        sx={{
+                            textOverflow: "ellipsis",
+                            overflow: "hidden",
+                            whiteSpace: "nowrap",
+                            color: event.color,
+                            fontWeight: 500,
+                            cursor: "pointer"
+                        }}
+                    >
+                        {event.title}
+                    </Typography>
+                </Tooltip>
             )}
         </Box>
     );
