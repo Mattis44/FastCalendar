@@ -4,19 +4,19 @@ import { FastContainer } from "./FastContainer";
 import { FastHeader } from "./Header/FastHeader";
 import { FastGrid } from "./Calendar/FastGrid";
 import { CalendarEvent, MonthIndex } from "../types/date";
-import { DataState } from "../types/calendar";
-import { LoadingFallback } from "./Fallbacks/LoadingFallback";
+import { Components, DataState } from "../types/calendar";
 import { ErrorFallback } from "./Fallbacks/ErrorFallback";
 
 interface FastCalendarProps {
     events?: CalendarEvent[];
     dataState?: DataState;
+    components?: Components;
 }
 
 /**
  * @param {CalendarEvent[]} events - Array of calendar events for the month
  */
-export const FastCalendar = ({ events, dataState }: FastCalendarProps) => {
+export const FastCalendar = ({ events, dataState, components }: FastCalendarProps) => {
     const [selectedMonth, setSelectedMonth] = useState<MonthIndex>(
         new Date().getMonth() as MonthIndex
     );
@@ -30,13 +30,16 @@ export const FastCalendar = ({ events, dataState }: FastCalendarProps) => {
             setCalendarEvents(events);
         }
     }, [events]);
-    console.log("[FastCalendar] Rendered with events:", calendarEvents);
-    
-    if (dataState?.error) {
-        return <ErrorFallback error={dataState.error} />;
-    }
+
     return (
         <FastContainer>
+            {dataState?.error && (
+                components?.error ? (
+                    <components.error error={dataState.error} />
+                ) : (
+                    <ErrorFallback error={dataState.error} />
+                )
+            )}
             <FastHeader
                 selectedMonth={selectedMonth}
                 setSelectedMonth={setSelectedMonth}
@@ -48,6 +51,9 @@ export const FastCalendar = ({ events, dataState }: FastCalendarProps) => {
                 month={selectedMonth}
                 events={calendarEvents}
                 loading={dataState?.loading}
+                components={{
+                    loading: components?.loading,
+                }}
             />
         </FastContainer>
     );

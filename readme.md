@@ -163,3 +163,15 @@ If you want to let Fast Calandar handle states for you, you can pass them from `
     }}
 />
 ```
+
+You can customize the loading and error default components by using `components` prop:
+
+```javascript
+<FastCalendar
+    events={events}
+    components={{
+        loading: () => <div>Loading...</div>,
+        error: (props) => <div>Error: {props.error.message}</div>,
+    }}
+/>
+```

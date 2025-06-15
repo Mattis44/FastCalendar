@@ -4,21 +4,31 @@ import { getCalendarGrid } from "../../utils/date";
 import { CalendarEvent } from "../../types/date";
 import { WEEK_DAYS } from "../../contants/date";
 import { FastCell } from "./FastCell";
+import { LoadingFallback } from "../Fallbacks/LoadingFallback";
 
 interface FastGridProps {
     year: number;
     month: number;
     events?: CalendarEvent[];
     loading?: boolean;
+    components?: {
+        loading?: React.ComponentType;
+    };
 }
 
-export const FastGrid = ({ year, month, events, loading }: FastGridProps) => {
+export const FastGrid = ({
+    year,
+    month,
+    events,
+    loading,
+    components,
+}: FastGridProps) => {
     const days = getCalendarGrid(year, month, events);
-
     return (
         <Box
             sx={{
                 width: "100%",
+                position: "relative",
             }}
         >
             <Box
@@ -57,7 +67,17 @@ export const FastGrid = ({ year, month, events, loading }: FastGridProps) => {
                 {days.map((cell, index) => (
                     <FastCell key={index} cell={cell} index={index} />
                 ))}
-                {loading && (
+            </Box>
+            {loading && (
+                <Box
+                    sx={{
+                        gridColumn: "span 7",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100px",
+                    }}
+                >
                     <Box
                         sx={{
                             position: "absolute",
@@ -67,10 +87,14 @@ export const FastGrid = ({ year, month, events, loading }: FastGridProps) => {
                             zIndex: 10,
                         }}
                     >
-                        <CircularProgress size={40} />
+                        {components?.loading ? (
+                            <components.loading />
+                        ) : (
+                            <LoadingFallback />
+                        )}
                     </Box>
-                )}
-            </Box>
+                </Box>
+            )}
         </Box>
     );
 };
