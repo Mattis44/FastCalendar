@@ -1,7 +1,7 @@
 <h1 align="center">
   <img src="./assets/FastCalendarIcon.png" alt="Fast Calendar" width="300" height="300" />
   <br/>
-  Fast Calendar
+  Fast React Calendar
 </h1>
 
 <h4 align="center">
@@ -21,7 +21,7 @@
 
 ## Key Features
 
--   **Fast**: Built with performance in mind, Fast Calendar is optimized for speed and efficiency.
+-   **Fast**: Built with performance in mind, Fast React Calendar is optimized for speed and efficiency.
 -   **Lightweight**: Minimal dependencies and a small footprint ensure quick load times.
 -   **Customizable**: Easily style and configure the calendar to fit your application's design.
 -   **Responsive**: Works seamlessly across devices, adapting to different screen sizes.
@@ -31,18 +31,18 @@
 
 ## How To Use
 
-To use Fast Calendar in your MUI project, follow these steps:
+To use Fast React Calendar in your MUI project, follow these steps:
 
 1. **Install the package**:
 
     ```bash
-    npm install @mui/material @mui/styled-engine-sc styled-components fastcalendar
+    npm install @mui/material @mui/styled-engine-sc styled-components fast-react-calendar
     ```
 
 2. **Import the component**:
 
     ```javascript
-    import { FastCalendar } from "fastcalendar";
+    import { FastCalendar } from "fast-react-calendar";
     ```
 
 3. **Use the component in your JSX**:
@@ -54,7 +54,7 @@ To use Fast Calendar in your MUI project, follow these steps:
 
 ## Theming
 
-Fast Calendar uses MUI's theming capabilities. You can customize the calendar's appearance by wrapping it in a `ThemeProvider` and passing your theme.
+Fast React Calendar uses MUI's theming capabilities. You can customize the calendar's appearance by wrapping it in a `ThemeProvider` and passing your theme.
 
 ```javascript
 // app.tsx (or layout.tsx)
@@ -64,7 +64,7 @@ import ReactDOM from 'react-dom/client';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
-import { FastCalendar } from "fastcalendar";
+import { FastCalendar } from "fast-react-calendar";
 
 const theme = createTheme({
     palette: {
@@ -109,7 +109,7 @@ type CalendarEvent {
 `CalendarEvent` is the type for each event object. You can import it from the library:
 
 ```typescript
-import { type CalendarEvent } from "fastcalendar";
+import { type CalendarEvent } from "fast-react-calendar";
 ```
 
 ### Start using events
@@ -129,7 +129,7 @@ type useEvents {
 `useEvents` takes a function as an argument that returns a promise resolving to an array of `CalendarEvent` objects. This function is called whenever the calendar needs to load events.
 
 ```javascript
-import { useEvents, type CalendarEvent } from "fastcalendar";
+import { useEvents, type CalendarEvent } from "fast-react-calendar";
 
 const fetchEvents = async (): Promise<CalendarEvent[]> => {
     const response = await fetch("https://example.com/api");
@@ -150,9 +150,9 @@ return (
 ```
 
 ### Data state management
-Fast Calendar provides `loading`, `error`, and `refresh` properties to manage the state of your events data. You can use these properties to show loading indicators, handle errors, or refresh the event list.
+Fast React Calendar provides `loading`, `error`, and `refresh` properties to manage the state of your events data. You can use these properties to show loading indicators, handle errors, or refresh the event list.
 
-If you want to let Fast Calandar handle states for you, you can pass them from `dataState` prop:
+If you want to let Fast React Calendar handle states for you, you can pass them from `dataState` prop:
 
 ```javascript
 <FastCalendar
@@ -184,8 +184,8 @@ To run the project locally during development:
 
 ```bash
 # Clone the repository
-git clone https://github.com/Mattis44/FastCalendar.git
-cd fastcalendar
+git clone https://github.com/Mattis44/fast-react-calendar.git
+cd fast-react-calendar
 
 # Install dependencies
 npm install
@@ -193,8 +193,8 @@ npm install
 # Run the development server
 npm run dev
 
-# Install fastcalendar as a local dependency from a project with MUI
-npm install --save ../fastcalendar
+# Install fast-react-calendar as a local dependency from a project with MUI
+npm install --save ../fast-react-calendar
 ```
 
 ### Code Structure Overview
