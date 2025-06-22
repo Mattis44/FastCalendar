@@ -1,6 +1,6 @@
 {
     "name": "fast-react-calendar",
-    "version": "1.0.0",
+    "version": "1.0.0-alpha.1",
     "description": "A fast and flexible calendar component for React, only for MUI.",
     "author": "Mattis",
     "license": "MIT",
@@ -36,8 +36,8 @@
         "date-fns": "^4.1.0"
     },
     "peerDependencies": {
-        "react": "^18.0.0",
-        "react-dom": "^18.0.0",
+        "react": "^18.0.0 || ^19.0.0",
+        "react-dom": "^18.0.0 || ^19.0.0",
         "@mui/material": "^5.15.0 || ^7.0.0",
         "@emotion/react": "^11.11.0",
         "@emotion/styled": "^11.11.0"
