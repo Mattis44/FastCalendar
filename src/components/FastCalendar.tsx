@@ -12,12 +12,13 @@ interface FastCalendarProps {
     events?: CalendarEvent[];
     dataState?: DataState;
     components?: Components;
+    locale?: string;
 }
 
 /**
  * @param {CalendarEvent[]} events - Array of calendar events for the month
  */
-export const FastCalendar = ({ events, dataState, components }: FastCalendarProps) => {
+export const FastCalendar = ({ events, dataState, components, locale }: FastCalendarProps) => {
     const [selectedMonth, setSelectedMonth] = useState<MonthIndex>(
         new Date().getMonth() as MonthIndex
     );
@@ -46,6 +47,7 @@ export const FastCalendar = ({ events, dataState, components }: FastCalendarProp
                 setSelectedMonth={setSelectedMonth}
                 selectedYear={selectedYear}
                 setSelectedYear={setSelectedYear}
+                locale={locale}
             />
             <FastGrid
                 year={selectedYear}
@@ -55,6 +57,7 @@ export const FastCalendar = ({ events, dataState, components }: FastCalendarProp
                 components={{
                     loading: components?.loading,
                 }}
+                locale={locale}
             />
         </FastContainer>
     );

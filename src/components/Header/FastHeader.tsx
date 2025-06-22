@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Box } from "@mui/material";
 
 import { MonthIndex } from "../../types/date";
@@ -10,6 +9,7 @@ interface FastHeaderProps {
     setSelectedMonth: (month: MonthIndex) => void;
     selectedYear: number;
     setSelectedYear: (year: number) => void;
+    locale?: string;
 }
 
 export const FastHeader = ({
@@ -17,6 +17,7 @@ export const FastHeader = ({
     setSelectedMonth,
     selectedYear,
     setSelectedYear,
+    locale,
 }: FastHeaderProps) => {
 
     return (
@@ -32,6 +33,7 @@ export const FastHeader = ({
                 selectedMonth={selectedMonth}
                 setSelectedMonth={setSelectedMonth}
                 setSelectedYear={setSelectedYear}
+                locale={locale}
             />
             <RightHeader
                 selectedYear={selectedYear}

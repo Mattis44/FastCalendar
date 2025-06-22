@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "description": "",
     "main": "dist/index.js",
+    "types": "dist/types/index.d.ts",
     "scripts": {
         "build": "tsup src/index.tsx --format esm,cjs --dts",
         "dev": "tsup src/index.tsx --format esm,cjs --dts --watch"
@@ -23,6 +24,8 @@
     },
     "dependencies": {
         "@mui/icons-material": "^7.1.1",
+        "@mui/x-date-pickers": "^8.5.3",
+        "date-fns": "^4.1.0",
         "react": "^18.0.0",
         "react-dom": "^18.0.0"
     },
@@ -33,7 +36,6 @@
             "types": "./dist/types/index.d.ts"
         }
     },
-    "types": "dist/types/index.d.ts",
     "peerDependencies": {
         "@emotion/react": "^11.11.0",
         "@emotion/styled": "^11.11.0",

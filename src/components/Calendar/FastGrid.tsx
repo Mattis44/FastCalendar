@@ -1,11 +1,11 @@
-import { Box, CircularProgress, Divider, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 
-import { getCalendarGrid } from "../../utils/date";
+import { capitalize, getCalendarGrid, getDateFnsLocale } from "../../utils/date";
 import { CalendarEvent } from "../../types/date";
-import { WEEK_DAYS } from "../../contants/date";
 import { FastCell } from "./FastCell";
 import { LoadingFallback } from "../Fallbacks/LoadingFallback";
 import { renderOptionalComponent } from "../../utils/render";
+import { addDays, format, startOfWeek } from "date-fns";
 
 interface FastGridProps {
     year: number;
@@ -15,6 +15,7 @@ interface FastGridProps {
     components?: {
         loading?: React.ComponentType;
     };
+    locale?: string;
 }
 
 export const FastGrid = ({
@@ -23,8 +24,11 @@ export const FastGrid = ({
     events,
     loading,
     components,
+    locale,
 }: FastGridProps) => {
-    const days = getCalendarGrid(year, month, events);
+    const days = getCalendarGrid(year, month, events, locale);
+    const start = startOfWeek(new Date(), { weekStartsOn: 0 });
+    const weekDays = Array.from({ length: 7 }, (_, i) => addDays(start, i));
     return (
         <Box
             sx={{
@@ -40,15 +44,19 @@ export const FastGrid = ({
                     mb: 1,
                 }}
             >
-                {WEEK_DAYS.map((day) => (
+                {weekDays.map((date, index) => (
                     <Typography
-                        key={day}
+                        key={index}
                         align="center"
                         variant="body2"
                         fontWeight={600}
                         color="text.secondary"
                     >
-                        {day}
+                        {capitalize(
+                            format(date, "EEEEEE", {
+                                locale: getDateFnsLocale(locale || "en-US"),
+                            })
+                        )}
                     </Typography>
                 ))}
             </Box>
@@ -66,7 +74,12 @@ export const FastGrid = ({
                 }}
             >
                 {days.map((cell, index) => (
-                    <FastCell key={index} cell={cell} index={index} />
+                    <FastCell
+                        key={index}
+                        cell={cell}
+                        index={index}
+                        locale={locale}
+                    />
                 ))}
             </Box>
             {loading && (

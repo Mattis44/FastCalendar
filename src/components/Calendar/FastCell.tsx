@@ -1,13 +1,16 @@
 import { Box, Typography } from "@mui/material";
 import { CalendarCell } from "../../types/date";
 import { CellEvent } from "./CellEvent";
+import { format } from "date-fns";
+import { capitalize, getDateFnsLocale } from "../../utils/date";
 
 interface FastCellProps {
     cell: CalendarCell;
     index: number;
+    locale?: string;
 }
 
-export const FastCell = ({ cell, index }: FastCellProps) => {
+export const FastCell = ({ cell, index, locale }: FastCellProps) => {
     const isCurrentDay = cell.date
         ? cell.date.toDateString() === new Date().toDateString()
         : false;
@@ -85,7 +88,12 @@ export const FastCell = ({ cell, index }: FastCellProps) => {
                         color: "text.secondary",
                     }}
                 >
-                    {cell.date?.toLocaleString("en-US", { month: "short" })}
+                    {cell.date &&
+                        capitalize(
+                            format(cell.date, "MMMM", {
+                                locale: getDateFnsLocale(locale || "en-US"),
+                            })
+                        )}
                 </Typography>
             )}
         </Box>

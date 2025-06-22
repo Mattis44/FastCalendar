@@ -16,6 +16,12 @@ export const CellEvent = ({ event, showTitle = true }: CellEventProps) => {
                 backgroundColor: alpha(event.color, 0.2),
                 border: `1px solid ${event.color}`,
                 borderRadius: "10px",
+                cursor: "pointer",
+                transition: "background-color 0.2s, box-shadow 0.2s ease-in-out",
+                "&:hover": {
+                    backgroundColor: alpha(event.color, 0.3),
+                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+                }
             }}
         >
             <Typography
