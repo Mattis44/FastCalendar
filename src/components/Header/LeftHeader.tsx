@@ -7,30 +7,33 @@ import {
     Select,
 } from "@mui/material";
 
-import { MonthIndex } from "../../types/date";
+import { MonthIndex, NewCalendarEvent } from "../../types/date";
 import { useState } from "react";
 import { ModalAddEvent } from "../Calendar/ModalAddEvent";
 import { capitalize, getDateFnsLocale } from "../../utils/date";
 import { format } from "date-fns";
+import { useLocale } from "../../context/LocalContext";
 interface LeftHeaderProps {
     selectedMonth: MonthIndex;
     setSelectedMonth: (month: MonthIndex) => void;
     setSelectedYear: (year: number) => void;
-    locale?: string;
+    onAddEvent: (event: NewCalendarEvent) => void | Promise<void>;
 }
 
 export const LeftHeader = ({
     selectedMonth,
     setSelectedMonth,
     setSelectedYear,
-    locale,
+    onAddEvent,
 }: LeftHeaderProps) => {
     const [modalAddEventOpen, setModalAddEventOpen] = useState(false);
+
+    const locale = useLocale();
 
     const monthLabels = Array.from({ length: 12 }, (_, i) =>
         capitalize(
             format(new Date(2025, i, 1), "LLLL", {
-                locale: getDateFnsLocale(locale || "en-US"),
+                locale: getDateFnsLocale(locale),
             })
         )
     );
@@ -83,7 +86,10 @@ export const LeftHeader = ({
             <ModalAddEvent
                 open={modalAddEventOpen}
                 onClose={() => setModalAddEventOpen(false)}
-                onSubmit={(ev) => {}}
+                onSubmit={async (ev) => {
+                    await Promise.resolve(onAddEvent(ev));
+                    setModalAddEventOpen(false);
+                }}
             />
         </Box>
     );

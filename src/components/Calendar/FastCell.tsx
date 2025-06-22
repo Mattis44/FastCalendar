@@ -3,14 +3,15 @@ import { CalendarCell } from "../../types/date";
 import { CellEvent } from "./CellEvent";
 import { format } from "date-fns";
 import { capitalize, getDateFnsLocale } from "../../utils/date";
+import { useLocale } from "../../context/LocalContext";
 
 interface FastCellProps {
     cell: CalendarCell;
     index: number;
-    locale?: string;
 }
 
-export const FastCell = ({ cell, index, locale }: FastCellProps) => {
+export const FastCell = ({ cell, index }: FastCellProps) => {
+    const locale = useLocale();
     const isCurrentDay = cell.date
         ? cell.date.toDateString() === new Date().toDateString()
         : false;

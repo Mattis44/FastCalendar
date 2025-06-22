@@ -5,8 +5,6 @@ export type Month = {
     index: MonthIndex;
 };
 
-
-
 export type CalendarEvent = {
     id: string;
     title: string;
@@ -16,7 +14,9 @@ export type CalendarEvent = {
     allDay?: boolean;
     description?: string;
     color: string;
-}
+};
+
+export type NewCalendarEvent = Omit<CalendarEvent, 'id'>;
 
 export type CalendarCell = {
     date: Date | null;

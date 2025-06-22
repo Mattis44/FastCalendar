@@ -1,11 +1,16 @@
 import { Box, Divider, Typography } from "@mui/material";
 
-import { capitalize, getCalendarGrid, getDateFnsLocale } from "../../utils/date";
+import {
+    capitalize,
+    getCalendarGrid,
+    getDateFnsLocale,
+} from "../../utils/date";
 import { CalendarEvent } from "../../types/date";
 import { FastCell } from "./FastCell";
 import { LoadingFallback } from "../Fallbacks/LoadingFallback";
 import { renderOptionalComponent } from "../../utils/render";
 import { addDays, format, startOfWeek } from "date-fns";
+import { useLocale } from "../../context/LocalContext";
 
 interface FastGridProps {
     year: number;
@@ -15,7 +20,6 @@ interface FastGridProps {
     components?: {
         loading?: React.ComponentType;
     };
-    locale?: string;
 }
 
 export const FastGrid = ({
@@ -24,8 +28,9 @@ export const FastGrid = ({
     events,
     loading,
     components,
-    locale,
 }: FastGridProps) => {
+    const locale = useLocale();
+
     const days = getCalendarGrid(year, month, events, locale);
     const start = startOfWeek(new Date(), { weekStartsOn: 0 });
     const weekDays = Array.from({ length: 7 }, (_, i) => addDays(start, i));
@@ -74,12 +79,7 @@ export const FastGrid = ({
                 }}
             >
                 {days.map((cell, index) => (
-                    <FastCell
-                        key={index}
-                        cell={cell}
-                        index={index}
-                        locale={locale}
-                    />
+                    <FastCell key={index} cell={cell} index={index} />
                 ))}
             </Box>
             {loading && (

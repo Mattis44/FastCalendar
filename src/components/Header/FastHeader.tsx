@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 
-import { MonthIndex } from "../../types/date";
+import { MonthIndex, NewCalendarEvent } from "../../types/date";
 import { LeftHeader } from "./LeftHeader";
 import { RightHeader } from "./RightHeader";
 
@@ -9,7 +9,7 @@ interface FastHeaderProps {
     setSelectedMonth: (month: MonthIndex) => void;
     selectedYear: number;
     setSelectedYear: (year: number) => void;
-    locale?: string;
+    onAddEvent: (event: NewCalendarEvent) => void | Promise<void>;
 }
 
 export const FastHeader = ({
@@ -17,7 +17,7 @@ export const FastHeader = ({
     setSelectedMonth,
     selectedYear,
     setSelectedYear,
-    locale,
+    onAddEvent
 }: FastHeaderProps) => {
 
     return (
@@ -33,7 +33,7 @@ export const FastHeader = ({
                 selectedMonth={selectedMonth}
                 setSelectedMonth={setSelectedMonth}
                 setSelectedYear={setSelectedYear}
-                locale={locale}
+                onAddEvent={onAddEvent}
             />
             <RightHeader
                 selectedYear={selectedYear}

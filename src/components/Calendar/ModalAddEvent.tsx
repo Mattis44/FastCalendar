@@ -1,6 +1,8 @@
 import {
     Box,
+    Button,
     Dialog,
+    DialogActions,
     DialogContent,
     DialogTitle,
     FormControl,
@@ -10,15 +12,17 @@ import {
     Select,
     TextField,
 } from "@mui/material";
-import { CalendarEvent } from "../../types/date";
+import { NewCalendarEvent } from "../../types/date";
 import { Close } from "@mui/icons-material";
-import { EVENT_ICONS } from "../../contants/calendar";
+import { EVENT_ICONS } from "../../constants/calendar";
 import { useState } from "react";
+import { LocalizedDatePicker } from "../Form/LocalizedDatePicker";
+import { addDays } from "date-fns";
 
 interface ModalAddEventProps {
     open: boolean;
     onClose: () => void;
-    onSubmit: (event: CalendarEvent) => void;
+    onSubmit: (event: NewCalendarEvent) => void | Promise<void>;
 }
 
 export const ModalAddEvent = ({
@@ -29,9 +33,38 @@ export const ModalAddEvent = ({
     const [eventTitle, setEventTitle] = useState<string>("");
     const [eventDescription, setEventDescription] = useState<string>("");
     const [selectedIcon, setSelectedIcon] = useState<string>(EVENT_ICONS[0]);
+    const [dateStart, setDateStart] = useState<Date | null>(new Date());
+    const [dateEnd, setDateEnd] = useState<Date | null>(addDays(new Date(), 1));
+    const [selectedColor, setSelectedColor] = useState<string>("#e91e63");
+
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const handleSubmit = async () => {
+        if (!eventTitle || !dateStart || !dateEnd) {
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const newEvent: NewCalendarEvent = {
+                title: eventTitle,
+                description: eventDescription,
+                icon: selectedIcon,
+                color: selectedColor,
+                start: dateStart,
+                end: dateEnd,
+            };
+            await onSubmit(newEvent);
+            onClose();
+        } catch (error) {
+            console.error("Error adding event:", error);
+        } finally {
+            setLoading(false);
+        }
+    }
 
     return (
-        <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+        <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
             <DialogTitle>Add Event</DialogTitle>
             <IconButton
                 aria-label="close"
@@ -51,6 +84,7 @@ export const ModalAddEvent = ({
                         display: "flex",
                         flexDirection: "column",
                         width: "100%",
+                        gap: 2,
                     }}
                 >
                     <Box
@@ -58,7 +92,6 @@ export const ModalAddEvent = ({
                             display: "flex",
                             alignItems: "center",
                             gap: 2,
-                            mb: 2,
                         }}
                     >
                         <TextField
@@ -76,7 +109,7 @@ export const ModalAddEvent = ({
                                 maxWidth: "100px",
                             }}
                         >
-                            <InputLabel>Event Icon</InputLabel>
+                            <InputLabel>Icon</InputLabel>
                             <Select
                                 fullWidth
                                 label="Event Icon"
@@ -92,6 +125,15 @@ export const ModalAddEvent = ({
                                 ))}
                             </Select>
                         </FormControl>
+                        <TextField
+                            label="Color"
+                            type="color"
+                            value={selectedColor}
+                            onChange={(e) => setSelectedColor(e.target.value)}
+                            sx={{
+                                width: "100px",
+                            }}
+                        />
                     </Box>
                     <TextField
                         fullWidth
@@ -103,8 +145,37 @@ export const ModalAddEvent = ({
                         onChange={(e) => setEventDescription(e.target.value)}
                         value={eventDescription}
                     />
+                    <Box
+                        sx={{
+                            display: "flex",
+                            gap: 2,
+                        }}
+                    >
+                        <LocalizedDatePicker
+                            label="Start Date"
+                            value={dateStart}
+                            onChange={(newValue) => setDateStart(newValue)}
+                        />
+                        <LocalizedDatePicker
+                            label="End Date"
+                            value={dateEnd}
+                            onChange={(newValue) => setDateEnd(newValue)}
+                        />
+                    </Box>
                 </Box>
             </DialogContent>
+            <DialogActions sx={{ justifyContent: "space-between" }}>
+                <Button onClick={onClose} color="error">Cancel</Button>
+                <Button
+                    onClick={handleSubmit}
+                    color="primary"
+                    disabled={!eventTitle || !dateStart || !dateEnd}
+                    loading={loading}
+                    variant="contained"
+                >
+                    Add Event
+                </Button>
+            </DialogActions>
         </Dialog>
     );
 };
