@@ -1,46 +1,44 @@
 {
-    "name": "fastcalendar",
-    "version": "1.0.0",
-    "description": "",
-    "main": "dist/index.js",
-    "types": "dist/types/index.d.ts",
-    "scripts": {
-        "build": "tsup src/index.tsx --format esm,cjs --dts",
-        "dev": "tsup src/index.tsx --format esm,cjs --dts --watch"
-    },
-    "module": "dist/index.mjs",
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "type": "commonjs",
-    "devDependencies": {
-        "@emotion/react": "^11.14.0",
-        "@emotion/styled": "^11.14.0",
-        "@mui/material": "^7.1.1",
-        "@types/react": "^19.1.8",
-        "@types/react-dom": "^19.1.6",
-        "tsup": "^8.5.0",
-        "typescript": "^5.8.3"
-    },
-    "dependencies": {
-        "@mui/icons-material": "^7.1.1",
-        "@mui/x-date-pickers": "^8.5.3",
-        "date-fns": "^4.1.0",
-        "react": "^18.0.0",
-        "react-dom": "^18.0.0"
-    },
-    "exports": {
-        ".": {
-            "require": "./dist/index.js",
-            "import": "./dist/index.mjs",
-            "types": "./dist/types/index.d.ts"
-        }
-    },
-    "peerDependencies": {
-        "@emotion/react": "^11.11.0",
-        "@emotion/styled": "^11.11.0",
-        "@mui/material": "^5.15.0",
-        "react": "^18.0.0",
-        "react-dom": "^18.0.0"
+  "name": "fastcalendar",
+  "version": "1.0.0-alpha.0",
+  "description": "A fast and flexible calendar component for React, only for MUI.",
+  "author": "Mattis",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
     }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.tsx --format esm,cjs --dts",
+    "dev": "tsup src/index.tsx --format esm,cjs --dts --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": ["calendar", "react", "component", "mui", "date", "events"],
+  "type": "module",
+  "dependencies": {
+    "@mui/icons-material": "^7.1.1",
+    "@mui/x-date-pickers": "^8.5.3",
+    "date-fns": "^4.1.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "@mui/material": "^5.15.0",
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0"
+  }
 }
