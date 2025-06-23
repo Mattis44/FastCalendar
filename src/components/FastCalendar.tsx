@@ -8,7 +8,6 @@ import { Components, DataState } from "../types/calendar";
 import { ErrorFallback } from "./Fallbacks/ErrorFallback";
 import { renderOptionalComponent } from "../utils/render";
 import { LocaleContext } from "../context/LocalContext";
-import { useEvents } from "../hooks/useEvents";
 
 interface FastCalendarProps {
     events?: CalendarEvent[];
@@ -63,11 +62,18 @@ export const FastCalendar = ({
                             icon: event.icon ?? "",
                             color: event.color ?? "",
                         };
-
-                        if (onAddEvent) {
-                            await Promise.resolve(onAddEvent(event));
+                        try {
+                            if (onAddEvent) {
+                                await Promise.resolve(onAddEvent(event));
+                            } else {
+                                setCalendarEvents((prev) => [
+                                    ...prev,
+                                    newEvent,
+                                ]);
+                            }
+                        } catch (error) {
+                            console.error("Error adding event:", error);
                         }
-                        setCalendarEvents((prev) => [...prev, newEvent]);
                     }}
                 />
                 <FastGrid
@@ -82,18 +88,23 @@ export const FastCalendar = ({
                         if (typeof changedEvent.id === "undefined") {
                             return;
                         }
-
-                        if (onEventChange) {
-                            await Promise.resolve(onEventChange(changedEvent));
+                        try {
+                            if (onEventChange) {
+                                await Promise.resolve(
+                                    onEventChange(changedEvent)
+                                );
+                            } else {
+                                setCalendarEvents((prev) =>
+                                    prev.map((ev) =>
+                                        ev.id === changedEvent.id
+                                            ? { ...ev, ...changedEvent }
+                                            : ev
+                                    )
+                                );
+                            }
+                        } catch (error) {
+                            console.error("Error updating event:", error);
                         }
-
-                        setCalendarEvents((prev) =>
-                            prev.map((ev) =>
-                                ev.id === changedEvent.id
-                                    ? { ...ev, ...changedEvent }
-                                    : ev
-                            )
-                        );
                     }}
                 />
             </FastContainer>
