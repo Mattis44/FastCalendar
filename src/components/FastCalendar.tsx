@@ -1,27 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { FastContainer } from "./FastContainer";
 import { FastHeader } from "./Header/FastHeader";
 import { FastGrid } from "./Calendar/FastGrid";
 import { CalendarEvent, MonthIndex, NewCalendarEvent } from "../types/date";
-import { Components, DataState } from "../types/calendar";
+import { CalendarApiRef, FastCalendarProps } from "../types/calendar";
 import { ErrorFallback } from "./Fallbacks/ErrorFallback";
 import { renderOptionalComponent } from "../utils/render";
 import { LocaleContext } from "../context/LocalContext";
 
-interface FastCalendarProps {
-    events?: CalendarEvent[];
-    dataState?: DataState;
-    components?: Components;
-    locale?: string;
-    onAddEvent?: (event: NewCalendarEvent) => void | Promise<void>;
-    onEventChange?: (event: CalendarEvent) => void | Promise<void>;
-}
-
-/**
- * @param {CalendarEvent[]} events - Array of calendar events for the month
- */
 export const FastCalendar = ({
+    apiRef,
     events,
     dataState,
     components,
@@ -37,11 +26,75 @@ export const FastCalendar = ({
     );
     const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([]);
 
+    const internalRef = useRef<CalendarApiRef>({
+        goToToday: () => {
+            const today = new Date();
+            setSelectedMonth(today.getMonth() as MonthIndex);
+            setSelectedYear(today.getFullYear());
+        },
+        setMonth: (month: MonthIndex) => {
+            setSelectedMonth(month);
+        },
+        setYear: (year: number) => {
+            setSelectedYear(year);
+        },
+        setDate: (date: Date) => {
+            setSelectedMonth(date.getMonth() as MonthIndex);
+            setSelectedYear(date.getFullYear());
+        },
+    });
+
     useEffect(() => {
         if (events) {
             setCalendarEvents(events);
         }
     }, [events]);
+
+    useEffect(() => {
+        if (apiRef) {
+            apiRef.current = internalRef.current;
+        }
+    }, [apiRef]);
+
+    const onAddEventHandler = async (event: NewCalendarEvent) => {
+        let newEvent: CalendarEvent = {
+            ...event,
+            id: crypto.randomUUID(),
+            icon: event.icon ?? "",
+            color: event.color ?? "",
+        };
+        try {
+            if (onAddEvent) {
+                await Promise.resolve(onAddEvent(newEvent));
+            } else {
+                setCalendarEvents((prev) => [...prev, newEvent]);
+            }
+        } catch (error) {
+            console.error("Error adding event:", error);
+        }
+    };
+
+    const onEventChangeHandler = async (changedEvent: CalendarEvent) => {
+        if (typeof changedEvent.id === "undefined") {
+            return;
+        }
+
+        try {
+            if (onEventChange) {
+                await Promise.resolve(onEventChange(changedEvent));
+            } else {
+                setCalendarEvents((prev) =>
+                    prev.map((ev) =>
+                        ev.id === changedEvent.id
+                            ? { ...ev, ...changedEvent }
+                            : ev
+                    )
+                );
+            }
+        } catch (error) {
+            console.error("Error updating event:", error);
+        }
+    };
 
     return (
         <LocaleContext.Provider value={locale}>
@@ -55,26 +108,7 @@ export const FastCalendar = ({
                     setSelectedMonth={setSelectedMonth}
                     selectedYear={selectedYear}
                     setSelectedYear={setSelectedYear}
-                    onAddEvent={async (event) => {
-                        let newEvent: CalendarEvent = {
-                            ...event,
-                            id: crypto.randomUUID(),
-                            icon: event.icon ?? "",
-                            color: event.color ?? "",
-                        };
-                        try {
-                            if (onAddEvent) {
-                                await Promise.resolve(onAddEvent(newEvent));
-                            } else {
-                                setCalendarEvents((prev) => [
-                                    ...prev,
-                                    newEvent,
-                                ]);
-                            }
-                        } catch (error) {
-                            console.error("Error adding event:", error);
-                        }
-                    }}
+                    onAddEvent={onAddEventHandler}
                 />
                 <FastGrid
                     year={selectedYear}
@@ -84,28 +118,7 @@ export const FastCalendar = ({
                     components={{
                         loading: components?.loading,
                     }}
-                    onEventChange={async (changedEvent) => {
-                        if (typeof changedEvent.id === "undefined") {
-                            return;
-                        }
-                        try {
-                            if (onEventChange) {
-                                await Promise.resolve(
-                                    onEventChange(changedEvent)
-                                );
-                            } else {
-                                setCalendarEvents((prev) =>
-                                    prev.map((ev) =>
-                                        ev.id === changedEvent.id
-                                            ? { ...ev, ...changedEvent }
-                                            : ev
-                                    )
-                                );
-                            }
-                        } catch (error) {
-                            console.error("Error updating event:", error);
-                        }
-                    }}
+                    onEventChange={onEventChangeHandler}
                 />
             </FastContainer>
         </LocaleContext.Provider>
