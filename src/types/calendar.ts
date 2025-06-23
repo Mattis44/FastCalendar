@@ -25,7 +25,7 @@ export interface FastCalendarProps {
     /**
      * Locale used for calendar formatting (e.g. day names, month labels).
      * Defaults to `"en-US"`.
-     * Should follow [IETF BCP 47 language tags](https://www.rfc-editor.org/rfc/bcp/bcp47.txt),
+     * Should follow [BCP 47 language tags](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument),
      * like `"fr"`, `"en-GB"`, `"de"`, etc.
      */
     locale?: string;
