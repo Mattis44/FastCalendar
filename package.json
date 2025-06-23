@@ -50,5 +50,13 @@
     },
     "publishConfig": {
         "access": "public"
-    }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Mattis44/fast-react-calendar.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Mattis44/fast-react-calendar/issues"
+    },
+    "homepage": "https://github.com/Mattis44/fast-react-calendar#readme"
 }
