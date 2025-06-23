@@ -62,7 +62,7 @@ export const FastGrid = ({
                         {capitalize(
                             format(date, "EEEEEE", {
                                 locale: getDateFnsLocale(locale || "en-US"),
-                            })
+                            }),
                         )}
                     </Typography>
                 ))}
@@ -89,7 +89,7 @@ export const FastGrid = ({
                             const newDate = cell.date;
                             const eventStartDate = new Date(event.start);
                             const eventEndDate = new Date(
-                                event.end || event.start
+                                event.end || event.start,
                             );
 
                             if (newDate && onEventChange) {
@@ -98,7 +98,7 @@ export const FastGrid = ({
                                     newDate.getMonth(),
                                     newDate.getDate(),
                                     eventStartDate.getHours(),
-                                    eventStartDate.getMinutes()
+                                    eventStartDate.getMinutes(),
                                 );
 
                                 const durationMs =
@@ -142,7 +142,7 @@ export const FastGrid = ({
                             renderOptionalComponent(
                                 components?.loading,
                                 LoadingFallback,
-                                {}
+                                {},
                             )}
                     </Box>
                 </Box>

@@ -61,7 +61,7 @@ export const ModalAddEvent = ({
         } finally {
             setLoading(false);
         }
-    }
+    };
 
     return (
         <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
@@ -165,7 +165,9 @@ export const ModalAddEvent = ({
                 </Box>
             </DialogContent>
             <DialogActions sx={{ justifyContent: "space-between" }}>
-                <Button onClick={onClose} color="error">Cancel</Button>
+                <Button onClick={onClose} color="error">
+                    Cancel
+                </Button>
                 <Button
                     onClick={handleSubmit}
                     color="primary"

@@ -46,5 +46,5 @@ export const EVENT_ICONS = [
     "🧩",
     "🧑‍💻",
     "🤝",
-    "🤖"
+    "🤖",
 ];

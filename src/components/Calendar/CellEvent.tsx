@@ -6,10 +6,7 @@ interface CellEventProps {
     showTitle?: boolean;
 }
 
-export const CellEvent = ({
-    event,
-    showTitle = true,
-}: CellEventProps) => {
+export const CellEvent = ({ event, showTitle = true }: CellEventProps) => {
     return (
         <Box
             draggable
@@ -17,7 +14,7 @@ export const CellEvent = ({
                 e.stopPropagation();
                 e.dataTransfer.setData(
                     "application/json",
-                    JSON.stringify(event)
+                    JSON.stringify(event),
                 );
             }}
             sx={{

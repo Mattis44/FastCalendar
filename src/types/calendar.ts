@@ -56,7 +56,7 @@ export interface CalendarApiRef {
      * Method to set the current year
      */
     setYear: (year: number) => void;
-    
+
     /**
      * Method to set the current date
      */

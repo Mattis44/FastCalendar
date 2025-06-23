@@ -16,7 +16,7 @@ export type CalendarEvent = {
     color: string;
 };
 
-export type NewCalendarEvent = Omit<CalendarEvent, 'id'>;
+export type NewCalendarEvent = Omit<CalendarEvent, "id">;
 
 export type CalendarCell = {
     date: Date | null;

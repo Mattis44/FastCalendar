@@ -12,11 +12,7 @@ interface FastCellProps {
     onEventDrop: (event: CalendarEvent, e: React.DragEvent) => void;
 }
 
-export const FastCell = ({
-    cell,
-    index,
-    onEventDrop,
-}: FastCellProps) => {
+export const FastCell = ({ cell, index, onEventDrop }: FastCellProps) => {
     const [dragCounter, setDragCounter] = useState(0);
     const isDragOver = dragCounter > 0;
 
@@ -66,8 +62,8 @@ export const FastCell = ({
                     isDragOver
                         ? `2px solid ${theme.palette.primary.main}`
                         : cell.isCurrentMonth
-                        ? `1px solid ${theme.palette.text.disabled}`
-                        : `1px solid ${theme.palette.divider}`,
+                          ? `1px solid ${theme.palette.text.disabled}`
+                          : `1px solid ${theme.palette.divider}`,
                 fontWeight: 500,
                 overflow: "hidden",
                 transition: "border-color 0.2s ease-in-out",
@@ -80,8 +76,8 @@ export const FastCell = ({
                     isCurrentDay
                         ? "common.white"
                         : cell.isCurrentMonth
-                        ? "text.primary"
-                        : "text.secondary"
+                          ? "text.primary"
+                          : "text.secondary"
                 }
                 sx={{
                     position: "absolute",
@@ -135,7 +131,7 @@ export const FastCell = ({
                         capitalize(
                             format(cell.date, "MMMM", {
                                 locale: getDateFnsLocale(locale || "en-US"),
-                            })
+                            }),
                         )}
                 </Typography>
             )}

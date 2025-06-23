@@ -10,8 +10,11 @@ interface LocalizedDatePickerProps {
     onChange?: (date: Date | null) => void;
 }
 
-export const LocalizedDatePicker = ({ label, value, onChange }: LocalizedDatePickerProps) => {
-
+export const LocalizedDatePicker = ({
+    label,
+    value,
+    onChange,
+}: LocalizedDatePickerProps) => {
     const locale = useLocale();
 
     return (
