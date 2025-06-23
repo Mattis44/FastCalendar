@@ -73,7 +73,6 @@ export const FastCalendar = ({
             console.error("Error adding event:", error);
         }
     };
-
     const onEventChangeHandler = async (changedEvent: CalendarEvent) => {
         if (typeof changedEvent.id === "undefined") {
             return;
