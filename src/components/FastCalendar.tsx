@@ -1,10 +1,10 @@
-import { forwardRef, RefObject, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { FastContainer } from "./FastContainer";
 import { FastHeader } from "./Header/FastHeader";
 import { FastGrid } from "./Calendar/FastGrid";
 import { CalendarEvent, MonthIndex, NewCalendarEvent } from "../types/date";
-import { CalendarApiRef, Components, DataState, FastCalendarProps } from "../types/calendar";
+import { CalendarApiRef, FastCalendarProps } from "../types/calendar";
 import { ErrorFallback } from "./Fallbacks/ErrorFallback";
 import { renderOptionalComponent } from "../utils/render";
 import { LocaleContext } from "../context/LocalContext";
