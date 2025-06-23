@@ -15,6 +15,7 @@ interface FastCalendarProps {
     components?: Components;
     locale?: string;
     onAddEvent?: (event: NewCalendarEvent) => void | Promise<void>;
+    onEventChange?: (event: CalendarEvent) => void | Promise<void>;
 }
 
 /**
@@ -26,6 +27,7 @@ export const FastCalendar = ({
     components,
     locale = "en-US",
     onAddEvent,
+    onEventChange,
 }: FastCalendarProps) => {
     const [selectedMonth, setSelectedMonth] = useState<MonthIndex>(
         new Date().getMonth() as MonthIndex
@@ -54,18 +56,23 @@ export const FastCalendar = ({
                     selectedYear={selectedYear}
                     setSelectedYear={setSelectedYear}
                     onAddEvent={async (event) => {
-                        if (onAddEvent) {
-                            await Promise.resolve(onAddEvent(event));
-                        } else {
-                            setCalendarEvents((prev) => [
-                                ...prev,
-                                {
-                                    ...event,
-                                    id: crypto.randomUUID(),
-                                    icon: event.icon ?? "",
-                                    color: event.color ?? "",
-                                },
-                            ]);
+                        let newEvent: CalendarEvent = {
+                            ...event,
+                            id: crypto.randomUUID(),
+                            icon: event.icon ?? "",
+                            color: event.color ?? "",
+                        };
+                        try {
+                            if (onAddEvent) {
+                                await Promise.resolve(onAddEvent(newEvent));
+                            } else {
+                                setCalendarEvents((prev) => [
+                                    ...prev,
+                                    newEvent,
+                                ]);
+                            }
+                        } catch (error) {
+                            console.error("Error adding event:", error);
                         }
                     }}
                 />
@@ -76,6 +83,28 @@ export const FastCalendar = ({
                     loading={dataState?.loading}
                     components={{
                         loading: components?.loading,
+                    }}
+                    onEventChange={async (changedEvent) => {
+                        if (typeof changedEvent.id === "undefined") {
+                            return;
+                        }
+                        try {
+                            if (onEventChange) {
+                                await Promise.resolve(
+                                    onEventChange(changedEvent)
+                                );
+                            } else {
+                                setCalendarEvents((prev) =>
+                                    prev.map((ev) =>
+                                        ev.id === changedEvent.id
+                                            ? { ...ev, ...changedEvent }
+                                            : ev
+                                    )
+                                );
+                            }
+                        } catch (error) {
+                            console.error("Error updating event:", error);
+                        }
                     }}
                 />
             </FastContainer>
