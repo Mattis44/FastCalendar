@@ -57,7 +57,7 @@ export const FastCalendar = ({
     }, [apiRef]);
 
     const onAddEventHandler = async (event: NewCalendarEvent) => {
-        let newEvent: CalendarEvent = {
+        const newEvent: CalendarEvent = {
             ...event,
             id: crypto.randomUUID(),
             icon: event.icon ?? "",
