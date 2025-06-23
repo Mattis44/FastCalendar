@@ -27,9 +27,6 @@ export const CellEvent = ({
                 );
                 onDragStart?.(event, e);
             }}
-            onDragEnd={(e) => {
-                onDragEnd?.(event, e);
-            }}
             sx={{
                 display: "flex",
                 gap: "4px",

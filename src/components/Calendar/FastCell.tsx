@@ -9,16 +9,12 @@ import { useState } from "react";
 interface FastCellProps {
     cell: CalendarCell;
     index: number;
-    onEventDragStart: (event: CalendarEvent, e: React.DragEvent) => void;
-    onEventDragEnd: (event: CalendarEvent, e: React.DragEvent) => void;
     onEventDrop: (event: CalendarEvent, e: React.DragEvent) => void;
 }
 
 export const FastCell = ({
     cell,
     index,
-    onEventDragStart,
-    onEventDragEnd,
     onEventDrop,
 }: FastCellProps) => {
     const [dragCounter, setDragCounter] = useState(0);
@@ -117,11 +113,9 @@ export const FastCell = ({
                 >
                     {cell.events.map((event, eventIndex) => (
                         <CellEvent
-                            key={eventIndex}
+                            key={`${event.id}-${eventIndex}`}
                             event={event}
                             showTitle={true}
-                            onDragStart={onEventDragStart}
-                            onDragEnd={onEventDragEnd}
                         />
                     ))}
                 </Box>

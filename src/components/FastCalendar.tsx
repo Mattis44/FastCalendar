@@ -64,7 +64,7 @@ export const FastCalendar = ({
                         };
                         try {
                             if (onAddEvent) {
-                                await Promise.resolve(onAddEvent(event));
+                                await Promise.resolve(onAddEvent(newEvent));
                             } else {
                                 setCalendarEvents((prev) => [
                                     ...prev,
