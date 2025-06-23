@@ -4,15 +4,11 @@ import { CalendarEvent } from "../../types/date";
 interface CellEventProps {
     event: CalendarEvent;
     showTitle?: boolean;
-    onDragStart?: (event: CalendarEvent, e: React.DragEvent) => void;
-    onDragEnd?: (event: CalendarEvent, e: React.DragEvent) => void;
 }
 
 export const CellEvent = ({
     event,
     showTitle = true,
-    onDragStart,
-    onDragEnd,
 }: CellEventProps) => {
     return (
         <Box
@@ -25,7 +21,6 @@ export const CellEvent = ({
                     "application/json",
                     JSON.stringify(event)
                 );
-                onDragStart?.(event, e);
             }}
             sx={{
                 display: "flex",

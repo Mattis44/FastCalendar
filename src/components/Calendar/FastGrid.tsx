@@ -86,7 +86,6 @@ export const FastGrid = ({
                         cell={cell}
                         index={index}
                         onEventDrop={(event, e) => {
-                            console.log("Drop ", event, e);
                             const newDate = cell.date;
                             const eventStartDate = new Date(event.start);
                             const eventEndDate = new Date(
