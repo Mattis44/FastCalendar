@@ -1,11 +1,11 @@
-import { RefObject } from "react";
+import { MutableRefObject } from "react";
 import { CalendarEvent, MonthIndex, NewCalendarEvent } from "./date";
 
 export interface FastCalendarProps {
     /**
      * Reference to the calendar API instance
      */
-    apiRef?: RefObject<CalendarApiRef | null>;
+    apiRef?: MutableRefObject<CalendarApiRef | null>;
 
     /**
      * Array of calendar events for the month
@@ -56,7 +56,7 @@ export interface CalendarApiRef {
      * Method to set the current year
      */
     setYear: (year: number) => void;
-    
+
     /**
      * Method to set the current date
      */

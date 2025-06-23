@@ -24,7 +24,11 @@ export const useEvents = ({ fetchEvents }: UseEventsOptions) => {
             const data = await Promise.resolve(fetchRef.current());
             setEvents(data);
         } catch (err) {
-            setError(err instanceof Error ? err : new Error("An unknown error occurred"));
+            setError(
+                err instanceof Error
+                    ? err
+                    : new Error("An unknown error occurred"),
+            );
         } finally {
             setLoading(false);
         }

@@ -17,9 +17,8 @@ export const FastHeader = ({
     setSelectedMonth,
     selectedYear,
     setSelectedYear,
-    onAddEvent
+    onAddEvent,
 }: FastHeaderProps) => {
-
     return (
         <Box
             sx={{

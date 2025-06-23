@@ -1,3 +1,5 @@
+![CI](https://github.com/Mattis44/fast-react-calendar/actions/workflows/ci.yml/badge.svg)
+
 <h1 align="center">
 NOTE : THIS MODULE IS IN ALPHA STAGE AND IS NOT READY FOR PRODUCTION USE.
 THERE MAY BE BREAKING CHANGES IN FUTURE RELEASES AND THE API IS NOT FINALIZED.
@@ -26,13 +28,13 @@ ANY FEEDBACK IS WELCOME, BUT PLEASE DO NOT USE THIS MODULE IN PRODUCTION UNTIL I
 
 ## Key Features
 
--   **Fast**: Built with performance in mind, Fast React Calendar is optimized for speed and efficiency.
--   **Lightweight**: Minimal dependencies and a small footprint ensure quick load times.
--   **Customizable**: Easily style and configure the calendar to fit your application's design.
--   **Responsive**: Works seamlessly across devices, adapting to different screen sizes.
--   **Easy to Use**: Simple API and clear documentation make integration a breeze.
--   **MUI Integration**: Built specifically for MUI, ensuring a consistent look and feel with your existing components.
--   **Accessibility**: Designed with accessibility in mind, ensuring all users can interact with the calendar.
+- **Fast**: Built with performance in mind, Fast React Calendar is optimized for speed and efficiency.
+- **Lightweight**: Minimal dependencies and a small footprint ensure quick load times.
+- **Customizable**: Easily style and configure the calendar to fit your application's design.
+- **Responsive**: Works seamlessly across devices, adapting to different screen sizes.
+- **Easy to Use**: Simple API and clear documentation make integration a breeze.
+- **MUI Integration**: Built specifically for MUI, ensuring a consistent look and feel with your existing components.
+- **Accessibility**: Designed with accessibility in mind, ensuring all users can interact with the calendar.
 
 ## How To Use
 
@@ -155,6 +157,7 @@ return (
 ```
 
 ### Data state management
+
 Fast React Calendar provides `loading`, `error`, and `refresh` properties to manage the state of your events data. You can use these properties to show loading indicators, handle errors, or refresh the event list.
 
 If you want to let Fast React Calendar handle states for you, you can pass them from `dataState` prop:

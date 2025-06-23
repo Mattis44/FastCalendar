@@ -1,15 +1,10 @@
-import {
-    addDays,
-    eachDayOfInterval,
-    format,
-    Locale,
-} from "date-fns";
+import { addDays, eachDayOfInterval, format, Locale } from "date-fns";
 import { CalendarCell, CalendarEvent } from "../types/date";
 import { enUS, fr, de, es, it, ja, zhCN } from "date-fns/locale";
 
 export const generateYears = (
     start: number = 1900,
-    end: number = new Date().getFullYear() + 50
+    end: number = new Date().getFullYear() + 50,
 ): number[] => {
     const years: number[] = [];
     for (let year = start; year <= end; year++) {
@@ -22,7 +17,7 @@ export const getCalendarGrid = (
     year: number,
     month: number,
     daysEvents: CalendarEvent[] = [],
-    locale: string = "en-US"
+    locale: string = "en-US",
 ): CalendarCell[] => {
     const result: CalendarCell[] = [];
 

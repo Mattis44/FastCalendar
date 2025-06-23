@@ -19,10 +19,10 @@ export const FastCalendar = ({
     onEventChange,
 }: FastCalendarProps) => {
     const [selectedMonth, setSelectedMonth] = useState<MonthIndex>(
-        new Date().getMonth() as MonthIndex
+        new Date().getMonth() as MonthIndex,
     );
     const [selectedYear, setSelectedYear] = useState<number>(
-        new Date().getFullYear()
+        new Date().getFullYear(),
     );
     const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([]);
 
@@ -57,7 +57,7 @@ export const FastCalendar = ({
     }, [apiRef]);
 
     const onAddEventHandler = async (event: NewCalendarEvent) => {
-        let newEvent: CalendarEvent = {
+        const newEvent: CalendarEvent = {
             ...event,
             id: crypto.randomUUID(),
             icon: event.icon ?? "",
@@ -73,7 +73,6 @@ export const FastCalendar = ({
             console.error("Error adding event:", error);
         }
     };
-
     const onEventChangeHandler = async (changedEvent: CalendarEvent) => {
         if (typeof changedEvent.id === "undefined") {
             return;
@@ -87,8 +86,8 @@ export const FastCalendar = ({
                     prev.map((ev) =>
                         ev.id === changedEvent.id
                             ? { ...ev, ...changedEvent }
-                            : ev
-                    )
+                            : ev,
+                    ),
                 );
             }
         } catch (error) {

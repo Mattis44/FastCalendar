@@ -34,8 +34,8 @@ export const LeftHeader = ({
         capitalize(
             format(new Date(2025, i, 1), "LLLL", {
                 locale: getDateFnsLocale(locale),
-            })
-        )
+            }),
+        ),
     );
     return (
         <Box
