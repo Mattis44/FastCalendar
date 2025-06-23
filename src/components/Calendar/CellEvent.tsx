@@ -15,8 +15,6 @@ export const CellEvent = ({
             draggable
             onDragStart={(e) => {
                 e.stopPropagation();
-                console.log("Dragging event:", event);
-                
                 e.dataTransfer.setData(
                     "application/json",
                     JSON.stringify(event)
