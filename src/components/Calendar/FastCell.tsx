@@ -1,35 +1,81 @@
 import { Box, Typography } from "@mui/material";
-import { CalendarCell } from "../../types/date";
+import { CalendarCell, CalendarEvent } from "../../types/date";
 import { CellEvent } from "./CellEvent";
 import { format } from "date-fns";
 import { capitalize, getDateFnsLocale } from "../../utils/date";
 import { useLocale } from "../../context/LocalContext";
+import { useState } from "react";
 
 interface FastCellProps {
     cell: CalendarCell;
     index: number;
+    onEventDragStart: (event: CalendarEvent, e: React.DragEvent) => void;
+    onEventDragEnd: (event: CalendarEvent, e: React.DragEvent) => void;
+    onEventDrop: (event: CalendarEvent, e: React.DragEvent) => void;
 }
 
-export const FastCell = ({ cell, index }: FastCellProps) => {
+export const FastCell = ({
+    cell,
+    index,
+    onEventDragStart,
+    onEventDragEnd,
+    onEventDrop,
+}: FastCellProps) => {
+    const [dragCounter, setDragCounter] = useState(0);
+    const isDragOver = dragCounter > 0;
+
     const locale = useLocale();
     const isCurrentDay = cell.date
         ? cell.date.toDateString() === new Date().toDateString()
         : false;
 
+    const handleDragEnter = (e: React.DragEvent) => {
+        e.preventDefault();
+        setDragCounter((prev) => prev + 1);
+    };
+
+    const handleDragLeave = (e: React.DragEvent) => {
+        e.preventDefault();
+        setDragCounter((prev) => Math.max(prev - 1, 0));
+    };
+
+    const handleDragOver = (e: React.DragEvent) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "move";
+    };
+
+    const handleDrop = (e: React.DragEvent) => {
+        e.preventDefault();
+        setDragCounter(0);
+        const data = e.dataTransfer.getData("application/json");
+        if (data) {
+            const event: CalendarEvent = JSON.parse(data);
+            onEventDrop(event, e);
+        }
+    };
+
     return (
         <Box
             key={index}
+            onDragOver={handleDragOver}
+            onDragEnter={handleDragEnter}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
             sx={{
                 width: "100%",
                 aspectRatio: "1",
                 position: "relative",
                 borderRadius: 2,
                 border: (theme) =>
-                    cell.isCurrentMonth
+                    isDragOver
+                        ? `2px solid ${theme.palette.primary.main}`
+                        : cell.isCurrentMonth
                         ? `1px solid ${theme.palette.text.disabled}`
                         : `1px solid ${theme.palette.divider}`,
                 fontWeight: 500,
                 overflow: "hidden",
+                transition: "border-color 0.2s ease-in-out",
+                boxSizing: "border-box",
             }}
         >
             <Typography
@@ -74,6 +120,8 @@ export const FastCell = ({ cell, index }: FastCellProps) => {
                             key={eventIndex}
                             event={event}
                             showTitle={true}
+                            onDragStart={onEventDragStart}
+                            onDragEnd={onEventDragEnd}
                         />
                     ))}
                 </Box>

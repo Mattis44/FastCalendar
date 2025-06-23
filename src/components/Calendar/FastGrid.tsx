@@ -20,6 +20,7 @@ interface FastGridProps {
     components?: {
         loading?: React.ComponentType;
     };
+    onEventChange?: (event: CalendarEvent) => void;
 }
 
 export const FastGrid = ({
@@ -28,6 +29,7 @@ export const FastGrid = ({
     events,
     loading,
     components,
+    onEventChange,
 }: FastGridProps) => {
     const locale = useLocale();
 
@@ -79,7 +81,49 @@ export const FastGrid = ({
                 }}
             >
                 {days.map((cell, index) => (
-                    <FastCell key={index} cell={cell} index={index} />
+                    <FastCell
+                        key={index}
+                        cell={cell}
+                        index={index}
+                        onEventDragEnd={(event, e) =>
+                            console.log("Drag End ", event, e)
+                        }
+                        onEventDragStart={(event, e) =>
+                            console.log("Drag Start ", event, e)
+                        }
+                        onEventDrop={(event, e) => {
+                            console.log("Drop ", event, e);
+                            const newDate = cell.date;
+                            const eventStartDate = new Date(event.start);
+                            const eventEndDate = new Date(
+                                event.end || event.start
+                            );
+
+                            if (newDate && onEventChange) {
+                                const newStart = new Date(
+                                    newDate.getFullYear(),
+                                    newDate.getMonth(),
+                                    newDate.getDate(),
+                                    eventStartDate.getHours(),
+                                    eventStartDate.getMinutes()
+                                );
+
+                                const durationMs =
+                                    eventEndDate.getTime() -
+                                    eventStartDate.getTime();
+
+                                const newEnd = event.end
+                                    ? new Date(newStart.getTime() + durationMs)
+                                    : undefined;
+
+                                onEventChange({
+                                    ...event,
+                                    start: newStart,
+                                    end: newEnd,
+                                });
+                            }
+                        }}
+                    />
                 ))}
             </Box>
             {loading && (

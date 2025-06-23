@@ -4,11 +4,32 @@ import { CalendarEvent } from "../../types/date";
 interface CellEventProps {
     event: CalendarEvent;
     showTitle?: boolean;
+    onDragStart?: (event: CalendarEvent, e: React.DragEvent) => void;
+    onDragEnd?: (event: CalendarEvent, e: React.DragEvent) => void;
 }
 
-export const CellEvent = ({ event, showTitle = true }: CellEventProps) => {
+export const CellEvent = ({
+    event,
+    showTitle = true,
+    onDragStart,
+    onDragEnd,
+}: CellEventProps) => {
     return (
         <Box
+            draggable
+            onDragStart={(e) => {
+                e.stopPropagation();
+                console.log("Dragging event:", event);
+                
+                e.dataTransfer.setData(
+                    "application/json",
+                    JSON.stringify(event)
+                );
+                onDragStart?.(event, e);
+            }}
+            onDragEnd={(e) => {
+                onDragEnd?.(event, e);
+            }}
             sx={{
                 display: "flex",
                 gap: "4px",
@@ -17,11 +38,12 @@ export const CellEvent = ({ event, showTitle = true }: CellEventProps) => {
                 border: `1px solid ${event.color}`,
                 borderRadius: "10px",
                 cursor: "pointer",
-                transition: "background-color 0.2s, box-shadow 0.2s ease-in-out",
+                transition:
+                    "background-color 0.2s, box-shadow 0.2s ease-in-out",
                 "&:hover": {
                     backgroundColor: alpha(event.color, 0.3),
                     boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-                }
+                },
             }}
         >
             <Typography
@@ -40,7 +62,7 @@ export const CellEvent = ({ event, showTitle = true }: CellEventProps) => {
                             whiteSpace: "nowrap",
                             color: event.color,
                             fontWeight: 500,
-                            cursor: "pointer"
+                            cursor: "pointer",
                         }}
                     >
                         {event.title}
