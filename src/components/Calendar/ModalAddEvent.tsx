@@ -177,7 +177,7 @@ export const ModalAddEvent = ({
                     loading={loading}
                     variant="contained"
                 >
-                    {t("addEvent.addEvent")}
+                    {t("addEvent.add")}
                 </Button>
             </DialogActions>
         </Dialog>
