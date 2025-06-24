@@ -9,6 +9,7 @@ export interface Translations {
         icon: string;
         color: string;
         description: string;
+        descriptionPlaceholder: string;
         startDate: string;
         endDate: string;
         cancel: string;
