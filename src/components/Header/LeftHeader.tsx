@@ -13,6 +13,7 @@ import { ModalAddEvent } from "../Calendar/ModalAddEvent";
 import { capitalize, getDateFnsLocale } from "../../utils/date";
 import { format } from "date-fns";
 import { useLocale } from "../../context/LocalContext";
+import { useTranslation } from "../../hooks/useTranslation";
 interface LeftHeaderProps {
     selectedMonth: MonthIndex;
     setSelectedMonth: (month: MonthIndex) => void;
@@ -29,6 +30,7 @@ export const LeftHeader = ({
     const [modalAddEventOpen, setModalAddEventOpen] = useState(false);
 
     const locale = useLocale();
+    const t = useTranslation();
 
     const monthLabels = Array.from({ length: 12 }, (_, i) =>
         capitalize(
@@ -45,9 +47,9 @@ export const LeftHeader = ({
             }}
         >
             <FormControl fullWidth>
-                <InputLabel>Month</InputLabel>
+                <InputLabel>{t("header.month")}</InputLabel>
                 <Select
-                    label="Month"
+                    label={t("header.month")}
                     value={selectedMonth}
                     onChange={(e) =>
                         setSelectedMonth(e.target.value as MonthIndex)
@@ -70,7 +72,7 @@ export const LeftHeader = ({
                     setSelectedYear(new Date().getFullYear());
                 }}
             >
-                Today
+                {t("header.today")}
             </Button>
 
             <Button
@@ -81,7 +83,7 @@ export const LeftHeader = ({
                     width: "200px",
                 }}
             >
-                + Add Event
+                + {t("header.addEvent")}
             </Button>
             <ModalAddEvent
                 open={modalAddEventOpen}

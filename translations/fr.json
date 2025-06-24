@@ -1,0 +1,18 @@
+{
+    "header": {
+        "month": "Mois",
+        "today": "Aujourd'hui",
+        "addEvent": "Ajouter un événement"
+    },
+    "addEvent": {
+        "title": "Titre de l'événement",
+        "icon": "Icône",
+        "color": "Couleur",
+        "description": "Description de l'événement",
+        "descriptionPlaceholder": "Entrez une description pour l'événement",
+        "startDate": "Date de début",
+        "endDate": "Date de fin",
+        "cancel": "Annuler",
+        "add": "Ajouter un événement"
+    }
+}

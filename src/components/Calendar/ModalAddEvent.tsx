@@ -18,6 +18,7 @@ import { EVENT_ICONS } from "../../constants/calendar";
 import { useState } from "react";
 import { LocalizedDatePicker } from "../Form/LocalizedDatePicker";
 import { addDays } from "date-fns";
+import { useTranslation } from "../../hooks/useTranslation";
 
 interface ModalAddEventProps {
     open: boolean;
@@ -38,6 +39,8 @@ export const ModalAddEvent = ({
     const [selectedColor, setSelectedColor] = useState<string>("#e91e63");
 
     const [loading, setLoading] = useState<boolean>(false);
+
+    const t = useTranslation();
 
     const handleSubmit = async () => {
         if (!eventTitle || !dateStart || !dateEnd) {
@@ -65,9 +68,8 @@ export const ModalAddEvent = ({
 
     return (
         <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
-            <DialogTitle>Add Event</DialogTitle>
+            <DialogTitle>{t("addEvent.title")}</DialogTitle>
             <IconButton
-                aria-label="close"
                 onClick={onClose}
                 sx={(theme) => ({
                     position: "absolute",
@@ -109,10 +111,10 @@ export const ModalAddEvent = ({
                                 maxWidth: "100px",
                             }}
                         >
-                            <InputLabel>Icon</InputLabel>
+                            <InputLabel>{t("addEvent.icon")}</InputLabel>
                             <Select
                                 fullWidth
-                                label="Event Icon"
+                                label={t("addEvent.icon")}
                                 value={selectedIcon}
                                 onChange={(e) =>
                                     setSelectedIcon(e.target.value as string)
@@ -126,7 +128,7 @@ export const ModalAddEvent = ({
                             </Select>
                         </FormControl>
                         <TextField
-                            label="Color"
+                            label={t("addEvent.color")}
                             type="color"
                             value={selectedColor}
                             onChange={(e) => setSelectedColor(e.target.value)}
@@ -137,10 +139,10 @@ export const ModalAddEvent = ({
                     </Box>
                     <TextField
                         fullWidth
-                        label="Event Description"
+                        label={t("addEvent.description")}
                         multiline
                         rows={4}
-                        placeholder="Add a description for the event"
+                        placeholder={t("addEvent.descriptionPlaceholder")}
                         variant="outlined"
                         onChange={(e) => setEventDescription(e.target.value)}
                         value={eventDescription}
@@ -152,12 +154,12 @@ export const ModalAddEvent = ({
                         }}
                     >
                         <LocalizedDatePicker
-                            label="Start Date"
+                            label={t("addEvent.startDate")}
                             value={dateStart}
                             onChange={(newValue) => setDateStart(newValue)}
                         />
                         <LocalizedDatePicker
-                            label="End Date"
+                            label={t("addEvent.endDate")}
                             value={dateEnd}
                             onChange={(newValue) => setDateEnd(newValue)}
                         />
@@ -166,7 +168,7 @@ export const ModalAddEvent = ({
             </DialogContent>
             <DialogActions sx={{ justifyContent: "space-between" }}>
                 <Button onClick={onClose} color="error">
-                    Cancel
+                    {t("addEvent.cancel")}
                 </Button>
                 <Button
                     onClick={handleSubmit}
@@ -175,7 +177,7 @@ export const ModalAddEvent = ({
                     loading={loading}
                     variant="contained"
                 >
-                    Add Event
+                    {t("addEvent.add")}
                 </Button>
             </DialogActions>
         </Dialog>
