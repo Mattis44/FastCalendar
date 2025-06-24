@@ -1,5 +1,6 @@
 import { useTranslationContext } from "../context/TranslationContext";
 import defaultTranslations from "../../translations/en.json";
+import { keyofDeep } from "../types/translations";
 
 const getNestedValue = (
     obj: Record<string, unknown>,
