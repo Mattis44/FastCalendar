@@ -10,14 +10,15 @@
     "exports": {
         ".": {
             "require": "./dist/index.js",
-            "import": "./dist/index.mjs"
+            "import": "./dist/index.mjs",
+            "types": "./dist/index.d.ts"
         }
     },
     "files": [
         "dist"
     ],
     "scripts": {
-        "build": "tsup src/index.tsx --format esm,cjs --dts",
+        "build": "tsup",
         "dev": "tsup src/index.tsx --format esm,cjs --dts --watch",
         "prepublishOnly": "npm run build",
         "lint": "eslint . --ext .ts,.tsx",
