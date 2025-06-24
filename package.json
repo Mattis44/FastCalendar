@@ -1,6 +1,6 @@
 {
     "name": "fast-react-calendar",
-    "version": "1.0.0-alpha.7",
+    "version": "1.0.0-alpha.9",
     "description": "A fast and flexible calendar component for React, only for MUI.",
     "author": "Mattis",
     "license": "MIT",
