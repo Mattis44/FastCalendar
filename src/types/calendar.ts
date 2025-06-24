@@ -1,5 +1,6 @@
 import { MutableRefObject } from "react";
 import { CalendarEvent, MonthIndex, NewCalendarEvent } from "./date";
+import { Translations } from "./translations";
 
 export interface FastCalendarProps {
     /**
@@ -29,6 +30,13 @@ export interface FastCalendarProps {
      * like `"fr"`, `"en-GB"`, `"de"`, etc.
      */
     locale?: string;
+
+    /**
+     * Translations for the calendar UI.
+     * Should be an object with keys matching the default strings used in the calendar.
+     * Example: `{ addEvent: "Add Event", today: "Today" }`
+     */
+    translations?: Partial<Translations>;
 
     /**
      * Callback triggered when a new event is added

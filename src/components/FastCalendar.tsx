@@ -8,6 +8,7 @@ import { CalendarApiRef, FastCalendarProps } from "../types/calendar";
 import { ErrorFallback } from "./Fallbacks/ErrorFallback";
 import { renderOptionalComponent } from "../utils/render";
 import { LocaleContext } from "../context/LocalContext";
+import { TranslationContext } from "../context/TranslationContext";
 
 export const FastCalendar = ({
     apiRef,
@@ -15,6 +16,7 @@ export const FastCalendar = ({
     dataState,
     components,
     locale = "en-US",
+    translations = {},
     onAddEvent,
     onEventChange,
 }: FastCalendarProps) => {
@@ -96,30 +98,36 @@ export const FastCalendar = ({
     };
 
     return (
-        <LocaleContext.Provider value={locale}>
-            <FastContainer>
-                {dataState?.error instanceof Error &&
-                    renderOptionalComponent(components?.error, ErrorFallback, {
-                        error: dataState.error,
-                    })}
-                <FastHeader
-                    selectedMonth={selectedMonth}
-                    setSelectedMonth={setSelectedMonth}
-                    selectedYear={selectedYear}
-                    setSelectedYear={setSelectedYear}
-                    onAddEvent={onAddEventHandler}
-                />
-                <FastGrid
-                    year={selectedYear}
-                    month={selectedMonth}
-                    events={calendarEvents}
-                    loading={dataState?.loading}
-                    components={{
-                        loading: components?.loading,
-                    }}
-                    onEventChange={onEventChangeHandler}
-                />
-            </FastContainer>
-        </LocaleContext.Provider>
+        <TranslationContext.Provider value={translations}>
+            <LocaleContext.Provider value={locale}>
+                <FastContainer>
+                    {dataState?.error instanceof Error &&
+                        renderOptionalComponent(
+                            components?.error,
+                            ErrorFallback,
+                            {
+                                error: dataState.error,
+                            },
+                        )}
+                    <FastHeader
+                        selectedMonth={selectedMonth}
+                        setSelectedMonth={setSelectedMonth}
+                        selectedYear={selectedYear}
+                        setSelectedYear={setSelectedYear}
+                        onAddEvent={onAddEventHandler}
+                    />
+                    <FastGrid
+                        year={selectedYear}
+                        month={selectedMonth}
+                        events={calendarEvents}
+                        loading={dataState?.loading}
+                        components={{
+                            loading: components?.loading,
+                        }}
+                        onEventChange={onEventChangeHandler}
+                    />
+                </FastContainer>
+            </LocaleContext.Provider>
+        </TranslationContext.Provider>
     );
 };
