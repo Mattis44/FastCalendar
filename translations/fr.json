@@ -6,7 +6,7 @@
     },
     "addEvent": {
         "title": "Titre de l'événement",
-        "icon": "Icone",
+        "icon": "Icône",
         "color": "Couleur",
         "description": "Description de l'événement",
         "descriptionPlaceholder": "Entrez une description pour l'événement",
