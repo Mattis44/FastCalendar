@@ -22,7 +22,7 @@ const getNestedValue = (
 export const useTranslation = () => {
     const contextTranslations = useTranslationContext();
 
-    const t = (key: string): string => {
+    const t = (key: keyofDeep<typeof defaultTranslations>): string => {
         return (
             getNestedValue(contextTranslations, key) ??
             getNestedValue(defaultTranslations, key) ??
