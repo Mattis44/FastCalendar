@@ -1,25 +1,27 @@
 {
     "name": "fast-react-calendar",
-    "version": "1.0.0-alpha.6",
+    "version": "1.0.0-alpha.7",
     "description": "A fast and flexible calendar component for React, only for MUI.",
     "author": "Mattis",
     "license": "MIT",
-    "main": "dist/index.js",
-    "module": "dist/index.mjs",
-    "types": "dist/index.d.ts",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
     "exports": {
-        ".": {
-            "require": "./dist/index.js",
-            "import": "./dist/index.mjs",
-            "types": "./dist/index.d.ts"
+        "import": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        },
+        "require": {
+            "types": "./dist/index.d.cts",
+            "require": "./dist/index.cjs"
         }
     },
     "files": [
         "dist"
     ],
     "scripts": {
-        "build": "tsup",
-        "dev": "tsup src/index.tsx --format esm,cjs --dts --watch",
+        "build": "tsup src/index.tsx --format cjs,esm --dts --clean --sourcemap",
         "prepublishOnly": "npm run build",
         "lint": "eslint . --ext .ts,.tsx",
         "prepare": "husky"
