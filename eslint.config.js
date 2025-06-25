@@ -14,6 +14,8 @@ export default defineConfig([
             "**/dist/**",
             "**/build/**",
             "**/examples/**",
+            "**/coverage/**",
+            "**/tests/**",
         ],
     },
 
