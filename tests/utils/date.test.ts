@@ -1,12 +1,30 @@
+import { CalendarEvent } from "../../src/types/date";
 import { generateYears } from "../../src/utils/date";
 
 describe("generateYears", () => {
     // Avant chaque test, mock la date pour qu'elle retourne 2025-06-25
     const mockedYear = 2025;
+    let testEvents: CalendarEvent[];
 
     beforeAll(() => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date(`${mockedYear}-06-25T00:00:00Z`));
+        testEvents = [
+            {
+                id: "1",
+                title: "Event 1",
+                icon: "📅",
+                start: new Date(2025, 5, 10), // 10 June 2025
+                color: "red",
+            },
+            {
+                id: "2",
+                title: "Event 2",
+                icon: "🎉",
+                start: new Date(2025, 5, 15), // 15 June 2025
+                color: "blue",
+            },
+        ];
     });
 
     afterAll(() => {
@@ -26,9 +44,10 @@ describe("generateYears", () => {
         expect(years).toEqual([2000, 2001, 2002, 2003, 2004, 2005]);
     });
 
-    it("should return empty array if start > end", () => {
-        const years = generateYears(2025, 2020);
-        expect(years).toEqual([]);
+    it("should throw if start > end", () => {
+        expect(() => generateYears(2025, 2020)).toThrow(
+            "Start year cannot be greater than end year.",
+        );
     });
 
     it("should work if start == end", () => {
