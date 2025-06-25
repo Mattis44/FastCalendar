@@ -7,6 +7,9 @@ export const generateYears = (
     end: number = new Date().getFullYear() + 50,
 ): number[] => {
     const years: number[] = [];
+    if (start > end) {
+        throw new Error("Start year cannot be greater than end year.");
+    }
     for (let year = start; year <= end; year++) {
         years.push(year);
     }

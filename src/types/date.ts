@@ -19,9 +19,9 @@ export type CalendarEvent = {
 export type NewCalendarEvent = Omit<CalendarEvent, "id">;
 
 export type CalendarCell = {
-    date: Date | null;
+    date: Date;
     day?: number;
     month?: string;
     isCurrentMonth: boolean;
-    events?: CalendarEvent[];
+    events: CalendarEvent[];
 };
