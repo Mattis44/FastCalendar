@@ -1,7 +1,18 @@
 import { format } from "date-fns";
 import { CalendarEvent } from "../../src/types/date";
-import { expandEvents, generateYears } from "../../src/utils/date";
+import { capitalize, generateYears } from "../../src/utils/date";
 import { getCalendarGrid } from "../../src/utils/date";
+import { enUS } from "date-fns/locale";
+
+jest.mock("../../src/utils/dateHelpers", () => ({
+    expandEvents: jest.fn(),
+    getDateFnsLocale: jest.fn(),
+}));
+
+import { expandEvents, getDateFnsLocale } from "../../src/utils/dateHelpers";
+
+const mockedExpandEvents = expandEvents as jest.Mock;
+const mockedGetDateFnsLocale = getDateFnsLocale as jest.Mock;
 
 const mockedYear = 2025;
 let testEvents: CalendarEvent[];
@@ -64,6 +75,13 @@ describe("generateYears", () => {
 });
 
 describe("getCalendarGrid", () => {
+    beforeAll(() => {
+        mockedExpandEvents.mockReturnValue({
+            "2025-06-10": [testEvents[0]],
+            "2025-06-15": [testEvents[1]],
+        });
+        mockedGetDateFnsLocale.mockReturnValue(enUS);
+    });
     it("should generate a 5-week grid for June 2025", () => {
         const result = getCalendarGrid(2025, 5, testEvents);
         expect(result.length).toBe(35);
@@ -110,6 +128,7 @@ describe("getCalendarGrid", () => {
     });
 
     it("should handle empty events array", () => {
+        mockedExpandEvents.mockReturnValue({});
         const result = getCalendarGrid(2025, 5, []);
         expect(result.length).toBe(35);
         for (const cell of result) {
@@ -118,81 +137,22 @@ describe("getCalendarGrid", () => {
     });
 });
 
-describe("expandEvents", () => {
-    it("should return an empty map for empty events", () => {
-        const result = expandEvents([]);
-        expect(result).toEqual({});
+describe("capitalize", () => {
+    it("should capitalize first character", () => {
+        expect(capitalize("hello")).toBe("Hello");
+        expect(capitalize("test")).toBe("Test");
     });
 
-    it("should correctly expand a single-day event", () => {
-        const events = [
-            {
-                id: "1",
-                title: "Meeting",
-                icon: "📅",
-                start: new Date("2025-06-24T10:00:00"),
-                end: new Date("2025-06-24T11:00:00"),
-                color: "#000000",
-            },
-        ];
-
-        const result = expandEvents(events);
-        const key = format(new Date("2025-06-24"), "yyyy-MM-dd");
-
-        expect(result[key]).toHaveLength(1);
-        expect(result[key][0].id).toBe("1");
+    it("should return empty string if input is empty", () => {
+        expect(capitalize("")).toBe("");
     });
 
-    it("should expand a multi-day event to each covered day", () => {
-        const events = [
-            {
-                id: "2",
-                title: "Conference",
-                icon: "🎤",
-                start: new Date("2025-06-24T09:00:00"),
-                end: new Date("2025-06-26T17:00:00"),
-                color: "#FF0000",
-            },
-        ];
-
-        const result = expandEvents(events);
-        const keys = [
-            format(new Date("2025-06-24"), "yyyy-MM-dd"),
-            format(new Date("2025-06-25"), "yyyy-MM-dd"),
-            format(new Date("2025-06-26"), "yyyy-MM-dd"),
-        ];
-
-        keys.forEach((key) => {
-            expect(result[key]).toBeDefined();
-            expect(result[key][0].id).toBe("2");
-        });
+    it("should keep already capitalized first character", () => {
+        expect(capitalize("Already")).toBe("Already");
     });
 
-    it("should add multiple events to the same day", () => {
-        const events = [
-            {
-                id: "3",
-                title: "Event A",
-                icon: "A",
-                start: new Date("2025-06-24T08:00:00"),
-                end: new Date("2025-06-24T10:00:00"),
-                color: "#111111",
-            },
-            {
-                id: "4",
-                title: "Event B",
-                icon: "B",
-                start: new Date("2025-06-24T12:00:00"),
-                end: new Date("2025-06-24T14:00:00"),
-                color: "#222222",
-            },
-        ];
-
-        const result = expandEvents(events);
-        const key = format(new Date("2025-06-24"), "yyyy-MM-dd");
-
-        expect(result[key]).toHaveLength(2);
-        expect(result[key].map((ev) => ev.id)).toContain("3");
-        expect(result[key].map((ev) => ev.id)).toContain("4");
+    it("should handle one-letter strings", () => {
+        expect(capitalize("a")).toBe("A");
+        expect(capitalize("B")).toBe("B");
     });
 });

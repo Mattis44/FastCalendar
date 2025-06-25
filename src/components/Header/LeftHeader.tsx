@@ -10,10 +10,11 @@ import {
 import { MonthIndex, NewCalendarEvent } from "../../types/date";
 import { useState } from "react";
 import { ModalAddEvent } from "../Calendar/ModalAddEvent";
-import { capitalize, getDateFnsLocale } from "../../utils/date";
+import { capitalize } from "../../utils/date";
 import { format } from "date-fns";
 import { useLocale } from "../../context/LocalContext";
 import { useTranslation } from "../../hooks/useTranslation";
+import { getDateFnsLocale } from "../../utils/dateHelpers";
 interface LeftHeaderProps {
     selectedMonth: MonthIndex;
     setSelectedMonth: (month: MonthIndex) => void;

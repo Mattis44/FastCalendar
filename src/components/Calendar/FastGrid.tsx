@@ -1,16 +1,13 @@
 import { Box, Divider, Typography } from "@mui/material";
 
-import {
-    capitalize,
-    getCalendarGrid,
-    getDateFnsLocale,
-} from "../../utils/date";
+import { capitalize, getCalendarGrid } from "../../utils/date";
 import { CalendarEvent } from "../../types/date";
 import { FastCell } from "./FastCell";
 import { LoadingFallback } from "../Fallbacks/LoadingFallback";
 import { renderOptionalComponent } from "../../utils/render";
 import { addDays, format, startOfWeek } from "date-fns";
 import { useLocale } from "../../context/LocalContext";
+import { getDateFnsLocale } from "../../utils/dateHelpers";
 
 interface FastGridProps {
     year: number;
