@@ -8,4 +8,6 @@ export default {
     transform: {
         ...tsJestTransformCfg,
     },
+    collectCoverage: true,
+    coverageDirectory: "coverage",
 };
