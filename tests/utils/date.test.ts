@@ -88,7 +88,7 @@ describe("getCalendarGrid", () => {
     });
 
     it("should generate a 6-week grid for Mars 2025", () => {
-        const result = getCalendarGrid(2025, 2);
+        const result = getCalendarGrid(2025, 2, testEvents);
         expect(result.length).toBe(42);
     });
 
