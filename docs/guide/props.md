@@ -10,7 +10,7 @@ Here is a list of all the props that can be used in the `FastCalendar` component
 |-----------|------|---------|-------------|
 | `events*` | `CalendarEvent[]` | `[]` | An array of [events](./events.md) to display in the calendar. Each event should conform to the `CalendarEvent` type. |
 | `locale?` | `string` | `"en-US"` | The locale to use for formatting dates and times. Defaults to `"en-US"`. |
-| `components?` | `CalendarComponents` | `{}` | An object containing custom components to override the default ones. See [Customize](./components.md) for more details. |
+| `components?` | `CalendarComponents` | `{}` | An object containing custom components to override the default ones. See [Customize](./customize.md) for more details. |
 | `apiRef?` | `React.MutableRefObject<CalendarApi>` | `null` | A ref to access the calendar [API](./api.md) methods. Useful for imperative actions like navigating to a specific date or refreshing events. |
 | `onAddEvent?` | `(event: CalendarEvent) => void` | `undefined` | A callback function that is called when a new event is added. Useful for handling event creation in your application. |
 | `onDeleteEvent?` | `(event: CalendarEvent) => void` | `undefined` | A callback function that is called when an event is deleted. Useful for handling event removal in your application. |
