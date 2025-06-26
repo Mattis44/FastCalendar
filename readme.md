@@ -6,7 +6,7 @@ THERE MAY BE BREAKING CHANGES IN FUTURE RELEASES AND THE API IS NOT FINALIZED.
 ANY FEEDBACK IS WELCOME, BUT PLEASE DO NOT USE THIS MODULE IN PRODUCTION UNTIL IT IS STABLE.
 </h1>
 <h1 align="center">
-  <img src="./assets/FastCalendarIcon.png" alt="Fast Calendar" width="300" height="300" />
+  <img src="./docs/public/FastCalendarIcon.png" alt="Fast Calendar" width="300" height="300" />
   <br/>
   Fast React Calendar
 </h1>
