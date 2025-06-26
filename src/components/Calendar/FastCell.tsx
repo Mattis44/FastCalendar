@@ -2,9 +2,10 @@ import { Box, Typography } from "@mui/material";
 import { CalendarCell, CalendarEvent } from "../../types/date";
 import { CellEvent } from "./CellEvent";
 import { format } from "date-fns";
-import { capitalize, getDateFnsLocale } from "../../utils/date";
+import { capitalize } from "../../utils/date";
 import { useLocale } from "../../context/LocalContext";
 import { useState } from "react";
+import { getDateFnsLocale } from "../../utils/dateHelpers";
 
 interface FastCellProps {
     cell: CalendarCell;

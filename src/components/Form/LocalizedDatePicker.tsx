@@ -1,7 +1,7 @@
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
-import { getDateFnsLocale } from "../../utils/date";
+import { getDateFnsLocale } from "../../utils/dateHelpers";
 import { useLocale } from "../../context/LocalContext";
 
 interface LocalizedDatePickerProps {
