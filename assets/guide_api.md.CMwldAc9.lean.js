@@ -1,0 +1,1 @@
+import{_ as a,c as i,o as n,ag as e}from"./chunks/framework.DXICRmoA.js";const o=JSON.parse('{"title":"Api","description":"","frontmatter":{},"headers":[],"relativePath":"guide/api.md","filePath":"guide/api.md"}'),t={name:"guide/api.md"};function h(p,s,l,k,d,r){return n(),i("div",null,s[0]||(s[0]=[e("",8)]))}const E=a(t,[["render",h]]);export{o as __pageData,E as default};
